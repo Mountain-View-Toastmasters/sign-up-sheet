@@ -8,38 +8,6 @@ const AMG_MINUTES_TEMPLATE_ID = "11NdRpVHwGTBLiCoCQmr8sDlskHnfkjzMMrhnB5iPpU8";
 const AMG_AGENDA_OUTPUT_FOLDER_ID = "14fBhsQ7u34EtXVWS8lWLS7QBwK7cdLNA";
 const AMG_MINUTES_OUTPUT_FOLDER_ID = "1GWySjq8y4OQS48PHT2vRyTxXWxKv8PyL";
 
-// TODO: put the menu function into its own file?
-function onOpen() {
-  let menuEntries = [
-    {
-      name: "Generate Agenda",
-      functionName: "generateAgenda",
-    },
-    {
-      name: "Generate Minutes",
-      functionName: "generateMinutes",
-    },
-    {
-      name: "Advance Sign Up Sheet",
-      functionName: "advanceSignUpSheet",
-    },
-    {
-      name: "Copy Sign Ups to Roles",
-      functionName: "copyCurrentSignUpSheetEntryToRolesSheet",
-    },
-    {
-      name: "Copy Toastmaster Details to Roles",
-      functionName: "copyToastmasterDetailsToRoles",
-    },
-    {
-      name: "Clear Toastmaster Details",
-      functionName: "clearToastmasterDetails",
-    },
-  ];
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
-  ss.addMenu("Generate", menuEntries);
-}
-
 function generateAgenda() {
   _generateMain(
     "Agendas",
