@@ -1,0 +1,19 @@
+{
+  "name": "sign-up-sheet",
+  "version": "1.0.0",
+  "description": "App scripts for the MVTM sign-up sheet",
+  "main": "index.js",
+  "scripts": {
+    "pull": "clasp pull",
+    "push": "clasp push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mountain-View-Toastmasters/sign-up-sheet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clasp": "^1.0.0"
+  }
+}
