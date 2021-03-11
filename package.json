@@ -7,6 +7,11 @@
     "pull": "clasp pull",
     "push": "clasp push"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mountain-View-Toastmasters/sign-up-sheet.git"
@@ -14,6 +19,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "clasp": "^1.0.0"
+    "clasp": "^1.0.0",
+    "husky": "^5.1.3",
+    "prettier": "2.2.1",
+    "pretty-quick": "^3.1.0"
   }
 }

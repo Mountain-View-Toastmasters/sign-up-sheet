@@ -9,7 +9,8 @@ following command:
 npm install
 ```
 
-Use `clasp` for managing the scripts. Otherwise, you may use the following commands for convenience.
+Use `clasp` for managing the scripts. Otherwise, you may use the following
+commands for convenience.
 
 ```
 # pull any changes from the sheet into the repo
