@@ -19,3 +19,6 @@ npm run pull
 # push any changes from the repo into the sheet
 npm run push
 ```
+
+All staged code will be formatted using [prettier in a pre-commit
+hook](https://github.com/azz/pretty-quick#pre-commit-hook).
