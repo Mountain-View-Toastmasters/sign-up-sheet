@@ -40,23 +40,6 @@ function onOpen() {
   ss.addMenu("Generate", menuEntries);
 }
 
-function localDate(date) {
-  return Utilities.formatDate(
-    new Date(date),
-    "GMT-7",
-    "MMMM dd, yyyy"
-  ).toString();
-}
-
-function isoDate(date) {
-  return Utilities.formatDate(new Date(date), "GMT-7", "yyyy-MM-dd").toString();
-}
-
-function addWeek(date) {
-  var nextDate = new Date(date);
-  return nextDate.setDate(date.getDate() + 7);
-}
-
 function generateAgenda() {
   _generateMain(
     "Agendas",
@@ -140,15 +123,6 @@ function _generateMain(
     `${template_type} have been compiled!\nWrote:\n\t` +
       data.map(title_formatter).join("\n\t")
   );
-}
-
-function normalizeName(name) {
-  return name
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, " ")
-    .trim()
-    .split(/\s+/)
-    .join("_");
 }
 
 // Convert spreadsheet data from a sheet object (csv) into an array of objects in
