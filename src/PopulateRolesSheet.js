@@ -1,7 +1,7 @@
 /**
  * A script with reference information and helper functions
  * for dealing with the Roles sheet
- * 
+ *
  * This script depends on the `DateFunctions` script
  */
 // TODO(bshaibu): Better namespace variables & add more comments
@@ -82,13 +82,13 @@ var Club_Sergeant_at_Arms_COL = 66;
 var Mentorship_Chair_COL = 67;
 
 // A mapping of the offset for different speaker columns
-var Speaker_COL_OFFSET                = 0;
-var Speaker_Pathway_COL_OFFSET        = 1;
-var Speaker_Level_COL_OFFSET          = 2;
-var Speaker_Project_COL_OFFSET        = 3;
-var Speaker_Speech_Title_COL_OFFSET   = 4;
-var Speaker_Min_Time_COL_OFFSET       = 5;
-var Speaker_Max_Time_COL_OFFSET       = 6;
+var Speaker_COL_OFFSET = 0;
+var Speaker_Pathway_COL_OFFSET = 1;
+var Speaker_Level_COL_OFFSET = 2;
+var Speaker_Project_COL_OFFSET = 3;
+var Speaker_Speech_Title_COL_OFFSET = 4;
+var Speaker_Min_Time_COL_OFFSET = 5;
+var Speaker_Max_Time_COL_OFFSET = 6;
 
 // let rolesSheetRow;
 // if roles sheet does not have a row for current date
@@ -96,37 +96,37 @@ var Speaker_Max_Time_COL_OFFSET       = 6;
 //  rowToEdit[dateColumns] = date
 
 function getAllRolesDates() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ROLES_SHEET_NAME);
-  return sheet.getRange(
-    1,
-    Date_COL,
-    sheet.getLastRow()).getValues();
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    ROLES_SHEET_NAME
+  );
+  return sheet.getRange(1, Date_COL, sheet.getLastRow()).getValues();
 }
 
 // Check if the current entry is within the last few columns
-// Return a Range object of the last dates entered into the 
+// Return a Range object of the last dates entered into the
 //  Roles spreadsheeet
 function getMostRecentRows(rowsToCheck = 10) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ROLES_SHEET_NAME);
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    ROLES_SHEET_NAME
+  );
   var lastFilledRow = sheet.getLastRow();
-  return sheet.getRange(
-    lastFilledRow - rowsToCheck + 1,
-    Date_COL,
-    rowsToCheck);
+  return sheet.getRange(lastFilledRow - rowsToCheck + 1, Date_COL, rowsToCheck);
 }
 
 // Check whether the date of interest is in the spreadsheet's last few rows
 //    Returns a tuple of whether the row exists & what index in the spreadsheet
 //    [indexInRange, indexInSheet]
 function hasRoleEntryForDate(recentEntries, dateString) {
-  var dateStrings = recentEntries.getValues().map(row => prettyFormatDate(row[0]));
+  var dateStrings = recentEntries
+    .getValues()
+    .map((row) => prettyFormatDate(row[0]));
   var rangeIndex = dateStrings.indexOf(dateString);
   var sheetIndex;
 
   // If the date is in the recent entries, find its index in the sheet
   if (rangeIndex != -1) {
     // Add 1 to select relative to 1-indexed range
-    var cell = recentEntries.getCell(rangeIndex + 1, 1)
+    var cell = recentEntries.getCell(rangeIndex + 1, 1);
     sheetIndex = cell.getLastRow();
   }
 
@@ -139,14 +139,16 @@ function hasRoleEntryForDate(recentEntries, dateString) {
 // TODO(bshaibu): remove default date
 //  Returns the row in the Roles sheet to edit
 function getOrCreateRoleEntryRow(dateString) {
-  const recentRows =  getMostRecentRows();
+  const recentRows = getMostRecentRows();
   var [hasRow, rowIndex] = hasRoleEntryForDate(recentRows, dateString);
-  
+
   if (!hasRow) {
     var lastRow = recentRows.getLastRow();
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ROLES_SHEET_NAME);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+      ROLES_SHEET_NAME
+    );
     sheet.insertRowAfter(lastRow);
-    rowIndex = lastRow + 1
+    rowIndex = lastRow + 1;
     sheet.getRange(rowIndex, DATE_COL_IDX).setValue(dateString);
   }
 

@@ -1,7 +1,7 @@
 /**
  * A script to parse the Sign Up Sheet's latest (leftmost) entry
  * and then copy its information into the Roles spreadsheet.
- * 
+ *
  * This script depends on the `PopulateRolesSheet` and `DateFunctions` scripts
  */
 // TODO(bshaibu): Better namespace variables & add more comments
@@ -10,7 +10,7 @@
 const SIGNUP_SHEET_NAME = "Sign-up Sheet";
 const SIGNUP_SHEET_ID = 1075325291;
 
-// The indices of the cells that the current entry in 
+// The indices of the cells that the current entry in
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
 const SIGNUP_START_ROW = 7;
@@ -19,47 +19,47 @@ const SIGNUP_START_COL = 2;
 const SIGNUP_END_COL = 9;
 
 // Sign Up Sheet Field References
-// These are relative to the current entry in the 
+// These are relative to the current entry in the
 //    sign up sheet and NOT the entire spreadsheet
 //    (0-indexed)
-var DATE_ROW_IDX      = 0;
-var DATE_COL_IDX      = 1;
+var DATE_ROW_IDX = 0;
+var DATE_COL_IDX = 1;
 
 // Sign Up Sheet Headers
 //  (relative to current entry, 0-indexed)
-var CONFIRM_COL_IDX       = 0;
-var ROLE_COL_IDX          = 1;
-var MEETING_LOCATION_IDX  = 2;
-var NAME_COL_IDX          = 2;
-var FULLNAME_COL_IDX      = 3;
-var EMAIL_COL_IDX         = 4;
-var PATHWAY_COL_IDX       = 5;
-var LEVEL_COL_IDX         = 6;
-var PROJECT_COL_IDX       = 7;
+var CONFIRM_COL_IDX = 0;
+var ROLE_COL_IDX = 1;
+var MEETING_LOCATION_IDX = 2;
+var NAME_COL_IDX = 2;
+var FULLNAME_COL_IDX = 3;
+var EMAIL_COL_IDX = 4;
+var PATHWAY_COL_IDX = 5;
+var LEVEL_COL_IDX = 6;
+var PROJECT_COL_IDX = 7;
 
 // Sign Up Sheet Rows
 //  (relative to current entry, 0-indexed)
-var MEETING_HEADER_ROW_IDX  = 0;
-var SIGN_UP_HEADER_ROW_IDX  = 1;
-var SAA_ROW_IDX             = 2;
-var SECRETARY_ROW_IDX       = 3;
-var TMOD_ROW_IDX            = 4;
-var JKM_ROW_IDX             = 5;
-var GE_ROW_IDX              = 6;
-var REC_ROW_IDX             = 7;
-var TIM_ROW_IDX             = 8;
-var AHC_ROW_IDX             = 9;
-var GRAM_ROW_IDX            = 10;
-var TTM_ROW_IDX             = 11;
-var SPK_HEADER_ROW_IDX      = 12;
-var SPK1_ROW_IDX            = 13;
-var SPK2_ROW_IDX            = 14;
-var SPK3_ROW_IDX            = 15;
-var EVAL1_ROW_IDX           = 16;
-var EVAL2_ROW_IDX           = 17;
-var EVAL3_ROW_IDX           = 18;
-var WLSPK1_ROW_IDX          = 19;
-var WLSPK2_ROW_IDX          = 20;
+var MEETING_HEADER_ROW_IDX = 0;
+var SIGN_UP_HEADER_ROW_IDX = 1;
+var SAA_ROW_IDX = 2;
+var SECRETARY_ROW_IDX = 3;
+var TMOD_ROW_IDX = 4;
+var JKM_ROW_IDX = 5;
+var GE_ROW_IDX = 6;
+var REC_ROW_IDX = 7;
+var TIM_ROW_IDX = 8;
+var AHC_ROW_IDX = 9;
+var GRAM_ROW_IDX = 10;
+var TTM_ROW_IDX = 11;
+var SPK_HEADER_ROW_IDX = 12;
+var SPK1_ROW_IDX = 13;
+var SPK2_ROW_IDX = 14;
+var SPK3_ROW_IDX = 15;
+var EVAL1_ROW_IDX = 16;
+var EVAL2_ROW_IDX = 17;
+var EVAL3_ROW_IDX = 18;
+var WLSPK1_ROW_IDX = 19;
+var WLSPK2_ROW_IDX = 20;
 
 // Helpers and Classes
 class SpeechDetails {
@@ -76,11 +76,19 @@ class SpeechDetails {
   }
 
   populateRolesSheet(rolesSheet, roleEntryRow, speakerCol) {
-    rolesSheet.getRange(roleEntryRow, speakerCol + Speaker_COL_OFFSET).setValue(this.name);
-    rolesSheet.getRange(roleEntryRow, speakerCol + Speaker_Pathway_COL_OFFSET).setValue(this.pathway);
-    rolesSheet.getRange(roleEntryRow, speakerCol + Speaker_Level_COL_OFFSET).setValue(this.level);
-    rolesSheet.getRange(roleEntryRow, speakerCol + Speaker_Project_COL_OFFSET).setValue(this.project);
-  }  
+    rolesSheet
+      .getRange(roleEntryRow, speakerCol + Speaker_COL_OFFSET)
+      .setValue(this.name);
+    rolesSheet
+      .getRange(roleEntryRow, speakerCol + Speaker_Pathway_COL_OFFSET)
+      .setValue(this.pathway);
+    rolesSheet
+      .getRange(roleEntryRow, speakerCol + Speaker_Level_COL_OFFSET)
+      .setValue(this.level);
+    rolesSheet
+      .getRange(roleEntryRow, speakerCol + Speaker_Project_COL_OFFSET)
+      .setValue(this.project);
+  }
 }
 
 class SignUpDetails {
@@ -88,7 +96,8 @@ class SignUpDetails {
     const signupsData = getSignUpSheetData();
 
     this.date = signupsData[DATE_ROW_IDX][DATE_COL_IDX];
-    this.meetingLocation = signupsData[MEETING_HEADER_ROW_IDX][MEETING_LOCATION_IDX];
+    this.meetingLocation =
+      signupsData[MEETING_HEADER_ROW_IDX][MEETING_LOCATION_IDX];
     this.sergeantAtArms = signupsData[SAA_ROW_IDX][NAME_COL_IDX];
     this.secretary = signupsData[SECRETARY_ROW_IDX][NAME_COL_IDX];
     this.toastmaster = signupsData[TMOD_ROW_IDX][NAME_COL_IDX];
@@ -112,8 +121,8 @@ class SignUpDetails {
   populateRolesSheet(rolesSheet, roleEntryRow) {
     const setCell = (column, value) => {
       rolesSheet.getRange(roleEntryRow, column).setValue(value);
-    }
-    
+    };
+
     // Fill out meeting metadata (minus already filled-in date)
     setCell(Meeting_Location_COL, this.meetingLocation);
 
@@ -128,7 +137,7 @@ class SignUpDetails {
     setCell(Ah_Counter_COL, this.ahCounter);
     setCell(Wordmaster_Grammarian_COL, this.wordmasterGrammarian);
     setCell(Table_Topics_Master_COL, this.tableTopicsMaster);
-    
+
     // Fill out Speakers
     this._populateSpeakerCells(rolesSheet, roleEntryRow);
 
@@ -140,7 +149,7 @@ class SignUpDetails {
 
     // Fill out Waiting list speakers
     setCell(Waiting_List_Speaker_1_COL, this.waitlistSpeaker1.name);
-    setCell(Waiting_List_Speaker_2_COL, this.waitlistSpeaker2.name);    
+    setCell(Waiting_List_Speaker_2_COL, this.waitlistSpeaker2.name);
     // TODO(bshaibu): Do we want to save anything beside the waiting list speaker's name?
   }
 
@@ -154,19 +163,28 @@ class SignUpDetails {
 
 function getSignUpSheetData() {
   // Open MVTM's Meeting Sign-Up Spreadsheet
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SIGNUP_SHEET_NAME);
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    SIGNUP_SHEET_NAME
+  );
   // Get the values into the data Array (ignoring the first few header rows)
-  return sheet.getRange(
-    SIGNUP_START_ROW,
-    SIGNUP_START_COL,
-    SIGNUP_END_ROW - SIGNUP_START_ROW + 1,
-    SIGNUP_END_COL - SIGNUP_START_COL + 1).getValues();
+  return sheet
+    .getRange(
+      SIGNUP_START_ROW,
+      SIGNUP_START_COL,
+      SIGNUP_END_ROW - SIGNUP_START_ROW + 1,
+      SIGNUP_END_COL - SIGNUP_START_COL + 1
+    )
+    .getValues();
 }
 
 function copyCurrentSignUpSheetEntryToRolesSheet() {
   const signUpDetails = new SignUpDetails();
-  const rolesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ROLES_SHEET_NAME);    
-  const roleEntryRow = getOrCreateRoleEntryRow(prettyFormatDate(signUpDetails.date));
+  const rolesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    ROLES_SHEET_NAME
+  );
+  const roleEntryRow = getOrCreateRoleEntryRow(
+    prettyFormatDate(signUpDetails.date)
+  );
   signUpDetails.populateRolesSheet(rolesSheet, roleEntryRow);
   copyOfficersToRoles(prettyFormatDate(signUpDetails.date));
 }

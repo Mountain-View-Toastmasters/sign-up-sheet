@@ -41,7 +41,11 @@ function onOpen() {
 }
 
 function localDate(date) {
-  return Utilities.formatDate(new Date(date), "GMT-7", "MMMM dd, yy").toString();
+  return Utilities.formatDate(
+    new Date(date),
+    "GMT-7",
+    "MMMM dd, yy"
+  ).toString();
 }
 
 function isoDate(date) {
