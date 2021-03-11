@@ -8,61 +8,13 @@ const AMG_MINUTES_TEMPLATE_ID = "11NdRpVHwGTBLiCoCQmr8sDlskHnfkjzMMrhnB5iPpU8";
 const AMG_AGENDA_OUTPUT_FOLDER_ID = "14fBhsQ7u34EtXVWS8lWLS7QBwK7cdLNA";
 const AMG_MINUTES_OUTPUT_FOLDER_ID = "1GWySjq8y4OQS48PHT2vRyTxXWxKv8PyL";
 
-// TODO: put the menu function into its own file?
-function onOpen() {
-  let menuEntries = [
-    {
-      name: "Generate Agenda",
-      functionName: "generateAgenda",
-    },
-    {
-      name: "Generate Minutes",
-      functionName: "generateMinutes",
-    },
-    {
-      name: "Advance Sign Up Sheet",
-      functionName: "advanceSignUpSheet",
-    },
-    {
-      name: "Copy Sign Ups to Roles",
-      functionName: "copyCurrentSignUpSheetEntryToRolesSheet",
-    },
-    {
-      name: "Copy Toastmaster Details to Roles",
-      functionName: "copyToastmasterDetailsToRoles",
-    },
-    {
-      name: "Clear Toastmaster Details",
-      functionName: "clearToastmasterDetails",
-    },
-  ];
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
-  ss.addMenu("Generate", menuEntries);
-}
-
-function localDate(date) {
-  return Utilities.formatDate(
-    new Date(date),
-    "GMT-7",
-    "MMMM dd, yy"
-  ).toString();
-}
-
-function isoDate(date) {
-  return Utilities.formatDate(new Date(date), "GMT-7", "yyyy-MM-dd").toString();
-}
-
-function addWeek(date) {
-  var nextDate = new Date(date);
-  return nextDate.setDate(date.getDate() + 7);
-}
-
 function generateAgenda() {
   _generateMain(
     "Agendas",
     AMG_AGENDA_OUTPUT_FOLDER_ID,
     AMG_AGENDA_TEMPLATE_ID,
-    (row) => `MVTM Meeting Agenda, ${row.DATE.toISOString().slice(0, 10)}`
+    (row) => `MVTM Meeting Agenda, ${row.DATE.toISOString().slice(0, 10)}`,
+    false
   );
 }
 
@@ -71,7 +23,8 @@ function generateMinutes() {
     "Minutes",
     AMG_MINUTES_OUTPUT_FOLDER_ID,
     AMG_MINUTES_TEMPLATE_ID,
-    (row) => `Meeting Minutes, ${row.DATE.toISOString().slice(0, 10)}`
+    (row) => `Meeting Minutes, ${row.DATE.toISOString().slice(0, 10)}`,
+    true
   );
 }
 
@@ -79,14 +32,28 @@ function generateMinutes() {
 /// output_folder_id: id of the drive folder to write output to
 /// template_id: id of the document to use as a template
 /// title_formatter: a callback of (row) -> string, for the title of the document
+/// use_full_name: whether to use the full name of a member
 function _generateMain(
   template_type,
   output_folder_id,
   template_id,
-  title_formatter
+  title_formatter,
+  use_full_name = false
 ) {
   let ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName("Roles");
+
+  const memberMap = getMemberMap();
+  const fieldsAlwaysFull = [
+    "CLUB_PRESIDENT",
+    "VP_EDUCATION",
+    "VP_MEMBERSHIP",
+    "VP_PUBLIC_RELATIONS",
+    "CLUB_SECRETARY",
+    "CLUB_TREASURER",
+    "CLUB_SERGEANT_AT_ARMS",
+    "MENTORSHIP_CHAIR",
+  ];
 
   // generate from the date in the current Toastmaster details sheet
   let date = new ToastmasterDetails().date;
@@ -100,7 +67,23 @@ function _generateMain(
       DATE_ISO: isoDate(row.DATE),
       NEXT_DATE_LOCAL: localDate(addWeek(row.DATE)),
       NEXT_DATE_ISO: isoDate(addWeek(row.DATE)),
-    }));
+    }))
+    .map((row) =>
+      // For each object, check if it's a name. If it is, then map it to the
+      // members.
+      Object.fromEntries(
+        Object.entries(row).map(([key, value]) => {
+          if (!(value in memberMap.members)) {
+            return [key, value];
+          }
+          if (use_full_name || fieldsAlwaysFull.includes(key)) {
+            return [key, memberMap.members[value].fullName];
+          } else {
+            return [key, value];
+          }
+        })
+      )
+    );
 
   Logger.log(JSON.stringify(data[0], " ", 2));
   fillTemplate(data, output_folder_id, template_id, title_formatter);
@@ -108,15 +91,6 @@ function _generateMain(
     `${template_type} have been compiled!\nWrote:\n\t` +
       data.map(title_formatter).join("\n\t")
   );
-}
-
-function normalizeName(name) {
-  return name
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, " ")
-    .trim()
-    .split(/\s+/)
-    .join("_");
 }
 
 // Convert spreadsheet data from a sheet object (csv) into an array of objects in
