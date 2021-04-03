@@ -8,7 +8,6 @@
 
 // Sheet Information
 const SIGNUP_SHEET_NAME = "Sign-up Sheet";
-const SIGNUP_SHEET_ID = 1075325291;
 
 // The indices of the cells that the current entry in
 //    the sign up sheet relies on.

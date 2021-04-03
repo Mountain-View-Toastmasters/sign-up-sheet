@@ -9,7 +9,6 @@
 
 // Sheet Information
 const TM_DETAILS_SHEET_NAME = "ToastmasterDetails";
-const TM_DETAILS_SHEET_ID = 1224751143;
 
 // The indices of the cells that the current entry in
 //    the sign up sheet relies on.
