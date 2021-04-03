@@ -25,9 +25,6 @@ function confirm(confirm_cb) {
   // Process the user's response.
   if (result == ui.Button.YES) {
     confirm_cb();
-  } else {
-    // User clicked "No" or X in the title bar.
-    ui.alert("Permission denied.");
   }
 }
 
