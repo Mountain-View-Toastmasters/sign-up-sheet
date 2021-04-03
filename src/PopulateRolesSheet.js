@@ -8,7 +8,6 @@
 
 // Sheet Information
 const ROLES_SHEET_NAME = "Roles";
-const ROLES_SHEET_ID = 1230832241;
 
 // Roles Sheet Column References
 //  Note: some are not currently used

@@ -3,7 +3,7 @@ const __SIGNUP_SHEET_SECTION_START_COL_NUM = 2;
 
 function advanceSignUpSheet() {
   var signUpSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-    "Sign-up Sheet - Automatic Advance"
+    "Sign-up Sheet"
   );
   var signUpTemplate = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
     "SignUp Template"

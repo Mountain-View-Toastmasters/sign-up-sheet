@@ -8,7 +8,6 @@
 
 // Sheet Information
 const ROSTER_SHEET_NAME = "Roster";
-const ROSTER_SHEET_ID = 1215600110;
 
 // The indices of the cells that the current entry in
 //    the sign up sheet relies on.
