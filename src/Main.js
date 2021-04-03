@@ -39,20 +39,16 @@ function clearAndAdvanceSignUp() {
 }
 
 function onOpen() {
-  let menuEntries = [
-    {
-      name: "Generate Agenda",
-      functionName: "copyAndGenerateAgenda",
-    },
-    {
-      name: "Generate Minutes",
-      functionName: "copyAndGenerateMinutes",
-    },
-    {
-      name: "Advance Sign Up Sheet",
-      functionName: "clearAndAdvanceSignUp",
-    },
-  ];
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
-  ss.addMenu("Generate", menuEntries);
+  let ui = SpreadsheetApp.getUi();
+  ui.createMenu("Generate")
+    .addItem("Generate Agenda", "copyAndGenerateAgenda")
+    .addItem("Generate Minutes", "copyAndGenerateMinutes")
+    .addSeparator()
+    .addSubMenu(
+      ui
+        .createMenu("Officers Only")
+        // ensure items in this submenu have a confirmation prompt
+        .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
+    )
+    .addToUi();
 }
