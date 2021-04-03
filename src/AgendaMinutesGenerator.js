@@ -1,12 +1,12 @@
 // variables share global scope, AMG = Agenda Minutes Generator
 
 // templates for documents
-const AMG_AGENDA_TEMPLATE_ID = "1to1G9m12Om-0u5rDfxyPhwdShiaDVaa55R8SP_7XvMY";
-const AMG_MINUTES_TEMPLATE_ID = "11NdRpVHwGTBLiCoCQmr8sDlskHnfkjzMMrhnB5iPpU8";
+const AMG_AGENDA_TEMPLATE_ID = "1pK49BIjfWl9arGvJimilGI-VcGdm00dKQ_q7oKXnaso";
+const AMG_MINUTES_TEMPLATE_ID = "1tJNlv8uxgEwE4eoqQVIsX4_KCVxFjOn_t2yLfzKp7rs";
 
 // directory for output files
-const AMG_AGENDA_OUTPUT_FOLDER_ID = "14fBhsQ7u34EtXVWS8lWLS7QBwK7cdLNA";
-const AMG_MINUTES_OUTPUT_FOLDER_ID = "1GWySjq8y4OQS48PHT2vRyTxXWxKv8PyL";
+const AMG_AGENDA_OUTPUT_FOLDER_ID = "1eIH2MuStQD2bBfcvsWvY9RNOnHjMUuts";
+const AMG_MINUTES_OUTPUT_FOLDER_ID = "1u3T8M97KMQm43oJd4Wb7FbBnt9CKaZoh";
 
 function generateAgenda() {
   _generateMain(
