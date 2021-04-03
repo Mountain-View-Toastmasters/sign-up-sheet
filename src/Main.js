@@ -13,7 +13,7 @@ function copyAndGenerateMinutes() {
 }
 
 // https://developers.google.com/apps-script/guides/dialogs
-function showAlert() {
+function confirm(confirm_cb) {
   var ui = SpreadsheetApp.getUi(); // Same variations.
 
   var result = ui.alert(
@@ -24,8 +24,7 @@ function showAlert() {
 
   // Process the user's response.
   if (result == ui.Button.YES) {
-    // User clicked "Yes".
-    ui.alert("Confirmation received.");
+    confirm_cb();
   } else {
     // User clicked "No" or X in the title bar.
     ui.alert("Permission denied.");
@@ -33,9 +32,10 @@ function showAlert() {
 }
 
 function clearAndAdvanceSignUp() {
-  showAlert();
-  // clearToastmasterDetails();
-  // advanceSignUpSheet();
+  confirm(() => {
+    clearToastmasterDetails();
+    advanceSignUpSheet();
+  });
 }
 
 function onOpen() {
