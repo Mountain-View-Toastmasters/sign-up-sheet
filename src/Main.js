@@ -1,20 +1,9 @@
 /// entrypoint script
 
 // function to run to create a new menu item
+
 function onOpen() {
   let menuEntries = [
-    {
-      name: "Generate Agenda",
-      functionName: "generateAgenda",
-    },
-    {
-      name: "Generate Minutes",
-      functionName: "generateMinutes",
-    },
-    {
-      name: "Advance Sign Up Sheet",
-      functionName: "advanceSignUpSheet",
-    },
     {
       name: "Copy Sign Ups to Roles",
       functionName: "copyCurrentSignUpSheetEntryToRolesSheet",
@@ -24,8 +13,20 @@ function onOpen() {
       functionName: "copyToastmasterDetailsToRoles",
     },
     {
+      name: "Generate Agenda",
+      functionName: "generateAgenda",
+    },
+    {
+      name: "Generate Minutes",
+      functionName: "generateMinutes",
+    },
+    {
       name: "Clear Toastmaster Details",
       functionName: "clearToastmasterDetails",
+    },
+    {
+      name: "Advance Sign Up Sheet",
+      functionName: "advanceSignUpSheet",
     },
   ];
   let ss = SpreadsheetApp.getActiveSpreadsheet();
