@@ -27,7 +27,7 @@ function confirm(confirm_cb) {
     confirm_cb();
   } else {
     // User clicked "No" or X in the title bar.
-    ui.alert("Permission denied.");
+    ui.alert("Cancelled change.");
   }
 }
 
