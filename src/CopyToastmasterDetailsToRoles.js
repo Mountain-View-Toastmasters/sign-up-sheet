@@ -172,3 +172,30 @@ function clearToastmasterDetails() {
   // Clear Speech and speaker titles
   tmDetailsSheet.getRange("F8:H10").clearContent();
 }
+
+function resetToastmasterDetailsFormulas() {
+  var toastmasterDetails = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    TM_DETAILS_SHEET_NAME
+  );
+
+  // Set Date cell
+  var currentDateCell = toastmasterDetails.getRange("B1");
+  currentDateCell.setFormula("='Sign-up Sheet'!C7");
+
+  // Set Speaker 1 - 3 shared details
+  setSpeakerCells(toastmasterDetails, 8, 20);
+  setSpeakerCells(toastmasterDetails, 9, 21);
+  setSpeakerCells(toastmasterDetails, 10, 22);
+}
+
+function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
+  var speakerCell = toastmasterDetails.getRange(`B${tmDetailsRow}`);
+  var pathNameCell = toastmasterDetails.getRange(`C${tmDetailsRow}`);
+  var levelCell = toastmasterDetails.getRange(`D${tmDetailsRow}`);
+  var projectCell = toastmasterDetails.getRange(`E${tmDetailsRow}`);
+
+  speakerCell.setFormula(`='Sign-up Sheet'!D${signUpSheetRow}`);
+  pathNameCell.setFormula(`='Sign-up Sheet'!G${signUpSheetRow}`);
+  levelCell.setFormula(`='Sign-up Sheet'!H${signUpSheetRow}`);
+  projectCell.setFormula(`='Sign-up Sheet'!I${signUpSheetRow}`);
+}

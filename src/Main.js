@@ -15,11 +15,6 @@ function copyAndGenerateMinutes() {
   generateMinutes();
 }
 
-function copyAndAdvanceSignUpSheet() {
-  copyAllSignUpDetails();
-  clearAndAdvanceSignUp();
-}
-
 // https://developers.google.com/apps-script/guides/dialogs
 function confirm(confirm_cb) {
   var ui = SpreadsheetApp.getUi(); // Same variations.
@@ -41,8 +36,10 @@ function confirm(confirm_cb) {
 
 function clearAndAdvanceSignUp() {
   confirm(() => {
+    copyAllSignUpDetails();
     clearToastmasterDetails();
     advanceSignUpSheet();
+    resetToastmasterDetailsFormulas();
   });
 }
 
@@ -56,10 +53,7 @@ function onOpen() {
       ui
         .createMenu("Officers Only")
         // ensure items in this submenu have a confirmation prompt
-        .addItem("Advance Sign Up Sheet", "copyAndAdvanceSignUpSheet")
-        .addItem(
-          "resetToastmasterDetailsFormulas"
-        )
+        .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
     )
     .addToUi();
 }
