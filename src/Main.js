@@ -1,15 +1,23 @@
 /// entrypoint script
 
-function copyAndGenerateAgenda() {
+function copyAllSignUpDetails() {
   copyCurrentSignUpSheetEntryToRolesSheet();
   copyToastmasterDetailsToRoles();
+}
+
+function copyAndGenerateAgenda() {
+  copyAllSignUpDetails();
   generateAgenda();
 }
 
 function copyAndGenerateMinutes() {
-  copyCurrentSignUpSheetEntryToRolesSheet();
-  copyToastmasterDetailsToRoles();
+  copyAllSignUpDetails();
   generateMinutes();
+}
+
+function copyAndAdvanceSignUpSheet() {
+  copyAllSignUpDetails();
+  clearAndAdvanceSignUp();
 }
 
 // https://developers.google.com/apps-script/guides/dialogs
@@ -46,10 +54,13 @@ function onOpen() {
     .addSeparator()
     .addSubMenu(
       ui
-      .createMenu("Officers Only")
-      // ensure items in this submenu have a confirmation prompt
-      .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
-      .addItem("TESTING - Reset Toastmaster Details", "resetToastmasterDetailsFormulas")
+        .createMenu("Officers Only")
+        // ensure items in this submenu have a confirmation prompt
+        .addItem("Advance Sign Up Sheet", "copyAndAdvanceSignUpSheet")
+        .addItem(
+          "TESTING - Reset Toastmaster Details",
+          "resetToastmasterDetailsFormulas"
+        )
     )
     .addToUi();
 }
