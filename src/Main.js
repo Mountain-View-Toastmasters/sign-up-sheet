@@ -1,14 +1,17 @@
 /// entrypoint script
 
-function copyAndGenerateAgenda() {
+function copyAllSignUpDetails() {
   copyCurrentSignUpSheetEntryToRolesSheet();
   copyToastmasterDetailsToRoles();
+}
+
+function copyAndGenerateAgenda() {
+  copyAllSignUpDetails();
   generateAgenda();
 }
 
 function copyAndGenerateMinutes() {
-  copyCurrentSignUpSheetEntryToRolesSheet();
-  copyToastmasterDetailsToRoles();
+  copyAllSignUpDetails();
   generateMinutes();
 }
 
@@ -25,13 +28,18 @@ function confirm(confirm_cb) {
   // Process the user's response.
   if (result == ui.Button.YES) {
     confirm_cb();
+  } else {
+    // User clicked "No" or X in the title bar.
+    ui.alert("Cancelled change.");
   }
 }
 
 function clearAndAdvanceSignUp() {
   confirm(() => {
+    copyAllSignUpDetails();
     clearToastmasterDetails();
     advanceSignUpSheet();
+    resetToastmasterDetailsFormulas();
   });
 }
 

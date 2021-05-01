@@ -95,7 +95,7 @@ function insertNewSignupSection(signUpSheet, signUpTemplate) {
 
   signUpSheet
     .getRange(
-      7,
+      __SIGNUP_SHEET_HEADER_ROW_NUM,
       signUpSheet.getLastColumn() + 1,
       rangeVals.length,
       signUpTemplate.getLastColumn()
@@ -113,6 +113,16 @@ function insertNewSignupSection(signUpSheet, signUpTemplate) {
     .setNumberFormats(rangeNumFormats)
     .setWraps(rangeWraps)
     .setDataValidations(rangeDataValids);
+
+  // Merge the meeting location cells
+  signUpSheet
+    .getRange(
+      __SIGNUP_SHEET_HEADER_ROW_NUM,
+      signUpSheet.getLastColumn() - 3,
+      1,
+      4
+    )
+    .mergeAcross();
 }
 
 function updateDate(signUpSheet, signUpTemplate) {
@@ -128,7 +138,11 @@ function updateDate(signUpSheet, signUpTemplate) {
     .getValue();
 
   var date = new Date(prevDate);
+  console.log("prevDate", date);
   date.setDate(date.getDate() + 7);
+  console.log("nextDate", date);
+  console.log("datecellval before", dateCell.getValue());
 
   dateCell.setValue(date);
+  console.log("datecellval after", dateCell.getValue());
 }
