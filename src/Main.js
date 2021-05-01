@@ -58,7 +58,6 @@ function onOpen() {
         // ensure items in this submenu have a confirmation prompt
         .addItem("Advance Sign Up Sheet", "copyAndAdvanceSignUpSheet")
         .addItem(
-          "TESTING - Reset Toastmaster Details",
           "resetToastmasterDetailsFormulas"
         )
     )
