@@ -7,6 +7,10 @@ const AMG_MINUTES_TEMPLATE_ID = "1tJNlv8uxgEwE4eoqQVIsX4_KCVxFjOn_t2yLfzKp7rs";
 // directory for output files
 const AMG_AGENDA_OUTPUT_FOLDER_ID = "1eIH2MuStQD2bBfcvsWvY9RNOnHjMUuts";
 const AMG_MINUTES_OUTPUT_FOLDER_ID = "1u3T8M97KMQm43oJd4Wb7FbBnt9CKaZoh";
+const GENERATED_AGENDAS_LINK = "https://rebrand.ly/mvtm-generated-agendas";
+const GENERATED_MINUTES_LINK = "https://rebrand.ly/mvtm-generated-minutes";
+const ROOT_GENERATED_LINK =
+  "https://drive.google.com/drive/folders/10RfkP6ePYUnnjnBo5eCBuZz1RyDlOZS-";
 
 function generateAgenda() {
   _generateMain(
@@ -14,7 +18,8 @@ function generateAgenda() {
     AMG_AGENDA_OUTPUT_FOLDER_ID,
     AMG_AGENDA_TEMPLATE_ID,
     (row) => `MVTM Meeting Agenda, ${row.DATE.toISOString().slice(0, 10)}`,
-    false
+    false,
+    GENERATED_AGENDAS_LINK
   );
 }
 
@@ -24,7 +29,8 @@ function generateMinutes() {
     AMG_MINUTES_OUTPUT_FOLDER_ID,
     AMG_MINUTES_TEMPLATE_ID,
     (row) => `Meeting Minutes, ${row.DATE.toISOString().slice(0, 10)}`,
-    true
+    true,
+    GENERATED_MINUTES_LINK
   );
 }
 
@@ -38,7 +44,8 @@ function _generateMain(
   output_folder_id,
   template_id,
   title_formatter,
-  use_full_name = false
+  use_full_name = false,
+  outputFolderLink = ROOT_GENERATED_LINK
 ) {
   let ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName("Roles");
@@ -88,8 +95,10 @@ function _generateMain(
   Logger.log(JSON.stringify(data[0], " ", 2));
   fillTemplate(data, output_folder_id, template_id, title_formatter);
   ss.toast(
-    `${template_type} have been compiled!\nWrote:\n\t` +
-      data.map(title_formatter).join("\n\t")
+    `Wrote:\n\t` +
+      data.map(title_formatter).join("\n\t") +
+      ` to ${outputFolderLink}`,
+    `${template_type} have been compiled!`
   );
 }
 
