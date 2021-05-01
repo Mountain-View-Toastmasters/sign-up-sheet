@@ -46,9 +46,10 @@ function onOpen() {
     .addSeparator()
     .addSubMenu(
       ui
-        .createMenu("Officers Only")
-        // ensure items in this submenu have a confirmation prompt
-        .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
+      .createMenu("Officers Only")
+      // ensure items in this submenu have a confirmation prompt
+      .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
+      .addItem("TESTING - Reset Toastmaster Details", "resetToastmasterDetailsFormulas")
     )
     .addToUi();
 }
