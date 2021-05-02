@@ -95,9 +95,9 @@ function _generateMain(
   Logger.log(JSON.stringify(data[0], " ", 2));
   fillTemplate(data, output_folder_id, template_id, title_formatter);
   ss.toast(
-    `Wrote:\n\t` +
-      data.map(title_formatter).join("\n\t") +
-      ` to ${outputFolderLink}`,
+    `Wrote:\n\t ${data
+      .map(title_formatter)
+      .join("\n\t")} to ${outputFolderLink}`,
     `${template_type} have been compiled!`
   );
 }
