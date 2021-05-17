@@ -141,4 +141,7 @@ function updateDate(signUpSheet, signUpTemplate) {
   date.setDate(date.getDate() + 7);
 
   dateCell.setValue(date);
+  // Note: we need to flush to be sure all pending spreadsheet operations
+  //  complete before the script exits
+  SpreadsheetApp.flush();
 }
