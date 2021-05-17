@@ -138,9 +138,10 @@ function updateDate(signUpSheet, signUpTemplate) {
     .getValue();
 
   var date = new Date(prevDate);
-  console.log("new date", date);
   date.setDate(date.getDate() + 7);
 
   dateCell.setValue(date);
-  console.log("date cell", dateCell);
+  // Note: we need to flush to be sure all pending spreadsheet operations
+  //  complete before the script exits
+  SpreadsheetApp.flush();
 }
