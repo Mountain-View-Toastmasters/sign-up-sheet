@@ -160,13 +160,12 @@ const DEFAULT_PROTECTED_RANGE_EDITORS = [
   // Allow Craig Wood (he's the spreadsheet owner and probably already added)
   "cwwood1234@gmail.com",
   // Allow the Officer's "robot" account
-  "mountainviewtm@gmail.com"
+  "mountainviewtm@gmail.com",
 ];
-const PROTECTION_MESSAGE = "Don't allow editing of finalized roles sheet rows (saved sign up details) by non-officers";
-
+const PROTECTION_MESSAGE =
+  "Don't allow editing of finalized roles sheet rows (saved sign up details) by non-officers";
 
 function removeAllCurrentEditors(protection) {
-  
   if (protection.canDomainEdit()) {
     protection.setDomainEdit(false);
   }
@@ -177,8 +176,10 @@ function protectRolesSheetRow(rowNumber) {
     ROLES_SHEET_NAME
   );
   const range = sheet.getRange(`${rowNumber}:${rowNumber}`);
-  const protection = range.protect().setDescription(`${PROTECTION_MESSAGE} - Row ${rowNumber}`);
-  
+  const protection = range
+    .protect()
+    .setDescription(`${PROTECTION_MESSAGE} - Row ${rowNumber}`);
+
   // Ensure the current user is an editor before removing others. Otherwise, if the user's edit
   // permission comes from a group, the script throws an exception upon removing the group.
   const me = Session.getEffectiveUser();
