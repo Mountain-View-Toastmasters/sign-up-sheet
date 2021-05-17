@@ -151,7 +151,7 @@ function getOrCreateRoleEntryRow(dateString) {
   return rowIndex;
 }
 
-// Section forn protecting the Roles spreadsheet
+// Section for protecting the Roles spreadsheet
 
 // These are the people generally allowed to edit protected sheets - Officers
 const DEFAULT_PROTECTED_RANGE_EDITORS = [
@@ -173,15 +173,15 @@ function removeAllCurrentEditors(protection) {
 }
 
 function protectRolesSheetRow(rowNumber) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
     ROLES_SHEET_NAME
   );
-  var range = sheet.getRange(`${rowNumber}:${rowNumber}`);
-  var protection = range.protect().setDescription(`${PROTECTION_MESSAGE} - Row ${rowNumber}`);
+  const range = sheet.getRange(`${rowNumber}:${rowNumber}`);
+  const protection = range.protect().setDescription(`${PROTECTION_MESSAGE} - Row ${rowNumber}`);
   
   // Ensure the current user is an editor before removing others. Otherwise, if the user's edit
   // permission comes from a group, the script throws an exception upon removing the group.
-  var me = Session.getEffectiveUser();
+  const me = Session.getEffectiveUser();
   protection.addEditor(me);
 
   // Before protections can be added, exitsting user list must be removed
