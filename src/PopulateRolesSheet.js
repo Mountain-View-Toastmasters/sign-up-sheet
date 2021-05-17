@@ -6,9 +6,6 @@
  */
 // TODO(bshaibu): Better namespace variables & add more comments
 
-// Sheet Information
-const ROLES_SHEET_NAME = "Roles";
-
 // Roles Sheet Column References
 //  Note: some are not currently used
 //  These are 1-indexed relative to the Roles spreadsheet

@@ -3,10 +3,10 @@ const __SIGNUP_SHEET_SECTION_START_COL_NUM = 2;
 
 function advanceSignUpSheet() {
   var signUpSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-    "Sign-up Sheet"
+    SIGNUP_SHEET_NAME
   );
   var signUpTemplate = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-    "SignUp Template"
+    SIGNUP_TEMPLATE
   );
 
   // Google Apps Script does not allow you to delete cells with active formulas,
