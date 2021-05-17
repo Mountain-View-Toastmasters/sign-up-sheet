@@ -48,7 +48,7 @@ function _generateMain(
   outputFolderLink = ROOT_GENERATED_LINK
 ) {
   let ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName("Roles");
+  let sheet = ss.getSheetByName(ROLES_SHEET_NAME);
 
   const memberMap = getMemberMap();
   const fieldsAlwaysFull = [

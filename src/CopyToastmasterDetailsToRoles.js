@@ -7,9 +7,6 @@
  */
 // TODO(bshaibu): Better namespace variables & add more comments
 
-// Sheet Information
-const TM_DETAILS_SHEET_NAME = "ToastmasterDetails";
-
 // The indices of the cells that the current entry in
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
@@ -180,7 +177,7 @@ function resetToastmasterDetailsFormulas() {
 
   // Set Date cell
   var currentDateCell = toastmasterDetails.getRange("B1");
-  currentDateCell.setFormula("='Sign-up Sheet'!C7");
+  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C7`);
 
   // Set Speaker 1 - 3 shared details
   setSpeakerCells(toastmasterDetails, 8, 20);
@@ -194,8 +191,8 @@ function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
   var levelCell = toastmasterDetails.getRange(`D${tmDetailsRow}`);
   var projectCell = toastmasterDetails.getRange(`E${tmDetailsRow}`);
 
-  speakerCell.setFormula(`='Sign-up Sheet'!D${signUpSheetRow}`);
-  pathNameCell.setFormula(`='Sign-up Sheet'!G${signUpSheetRow}`);
-  levelCell.setFormula(`='Sign-up Sheet'!H${signUpSheetRow}`);
-  projectCell.setFormula(`='Sign-up Sheet'!I${signUpSheetRow}`);
+  speakerCell.setFormula(`='${SIGNUP_SHEET_NAME}'!D${signUpSheetRow}`);
+  pathNameCell.setFormula(`='${SIGNUP_SHEET_NAME}'!G${signUpSheetRow}`);
+  levelCell.setFormula(`='${SIGNUP_SHEET_NAME}'!H${signUpSheetRow}`);
+  projectCell.setFormula(`='${SIGNUP_SHEET_NAME}'!I${signUpSheetRow}`);
 }
