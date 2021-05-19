@@ -147,6 +147,10 @@ function getToastmastersDetailsSheetData() {
     .getValues();
 }
 
+/**
+ * Copies all details from the ToastmasterDetails page into the Roles spreadsheet.
+ * @returns roleEntryRow the number of the row that has been added/edited
+ */
 function copyToastmasterDetailsToRoles() {
   const tmDetails = new ToastmasterDetails();
   const rolesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
@@ -157,6 +161,7 @@ function copyToastmasterDetailsToRoles() {
   );
   tmDetails.populateRolesSheet(rolesSheet, roleEntryRow);
   copyOfficersToRoles(prettyFormatDate(tmDetails.date));
+  return roleEntryRow;
 }
 
 // Function to clear the roster selections

@@ -91,3 +91,4 @@ For now, if you want to test changes on sheets, you are advised to:
         npm run push
     ```
 13. Verify things work as expected.
+14. Delete the Copy sheets you made!

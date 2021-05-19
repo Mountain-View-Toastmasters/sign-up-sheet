@@ -1,8 +1,15 @@
 /// entrypoint script
 
+/**
+ * Runs scripts to copy latest signup sheet and toastmaster
+ *  details into Roles
+ * @returns updatedRow The row where all sign up 
+ *  details have been copied into
+ */
 function copyAllSignUpDetails() {
-  copyCurrentSignUpSheetEntryToRolesSheet();
+  const updatedRow = copyCurrentSignUpSheetEntryToRolesSheet();
   copyToastmasterDetailsToRoles();
+  return updatedRow;
 }
 
 function copyAndGenerateAgenda() {
@@ -36,7 +43,8 @@ function confirm(confirm_cb) {
 
 function clearAndAdvanceSignUp() {
   confirm(() => {
-    copyAllSignUpDetails();
+    const updatedRowNumber = copyAllSignUpDetails();
+    protectRolesSheetRow(updatedRowNumber);
     clearToastmasterDetails();
     advanceSignUpSheet();
     resetToastmasterDetailsFormulas();

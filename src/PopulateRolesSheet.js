@@ -150,3 +150,50 @@ function getOrCreateRoleEntryRow(dateString) {
 
   return rowIndex;
 }
+
+// Section for protecting the Roles spreadsheet
+
+// These are the people generally allowed to edit protected sheets - Officers
+const DEFAULT_PROTECTED_RANGE_EDITORS = [
+  // Allow MVTM Officers
+  "mountainviewtoastmastersofficers@googlegroups.com",
+  // Allow Craig Wood (he's the spreadsheet owner and probably already added)
+  "cwwood1234@gmail.com",
+  // Allow the Officer's "robot" account
+  "mountainviewtm@gmail.com",
+];
+const PROTECTION_MESSAGE =
+  "Don't allow editing of finalized roles sheet rows (saved sign up details) by non-officers";
+
+function removeAllCurrentEditors(protection) {
+  if (protection.canDomainEdit()) {
+    protection.setDomainEdit(false);
+  }
+}
+
+function protectRolesSheetRow(rowNumber) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+    ROLES_SHEET_NAME
+  );
+  const range = sheet.getRange(`${rowNumber}:${rowNumber}`);
+  const protection = range
+    .protect()
+    .setDescription(`${PROTECTION_MESSAGE} - Row ${rowNumber}`);
+
+  // Ensure the current user is an editor before removing others. Otherwise, if the user's edit
+  // permission comes from a group, the script throws an exception upon removing the group.
+  const me = Session.getEffectiveUser();
+  protection.addEditor(me);
+
+  // Before protections can be added, exitsting user list must be removed
+  protection.removeEditors(protection.getEditors());
+
+  // Add the default editors
+  protection.addEditors(DEFAULT_PROTECTED_RANGE_EDITORS);
+
+  // Restrict editing to only users explicitly set as editors - not just anyone
+  //  with permissions to the sheet
+  if (protection.canDomainEdit()) {
+    protection.setDomainEdit(false);
+  }
+}

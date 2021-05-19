@@ -173,6 +173,11 @@ function getSignUpSheetData() {
     .getValues();
 }
 
+/**
+ * Copies all details from the active (leftmost) sign up sheet entry
+ *  into the Roles spreadsheet.
+ * @returns roleEntryRow the number of the row that has been added/edited
+ */
 function copyCurrentSignUpSheetEntryToRolesSheet() {
   const signUpDetails = new SignUpDetails();
   const rolesSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
@@ -183,4 +188,5 @@ function copyCurrentSignUpSheetEntryToRolesSheet() {
   );
   signUpDetails.populateRolesSheet(rolesSheet, roleEntryRow);
   copyOfficersToRoles(prettyFormatDate(signUpDetails.date));
+  return roleEntryRow;
 }
