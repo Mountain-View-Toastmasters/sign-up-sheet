@@ -182,12 +182,15 @@ function resetToastmasterDetailsFormulas() {
 
   // Set Date cell
   var currentDateCell = toastmasterDetails.getRange("B1");
-  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C7`);
+  // NOTE(acmiyaguchi): variables are generally defined in
+  // CopySignUpSheetToRoles, but I don't appreciate the design choice of gs to
+  // share variable scope across files. It's very confusing.
+  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C${SIGNUP_START_ROW}`);
 
   // Set Speaker 1 - 3 shared details
-  setSpeakerCells(toastmasterDetails, 8, 20);
-  setSpeakerCells(toastmasterDetails, 9, 21);
-  setSpeakerCells(toastmasterDetails, 10, 22);
+  setSpeakerCells(toastmasterDetails, 8, SIGNUP_START_ROW + SPK1_ROW_IDX);
+  setSpeakerCells(toastmasterDetails, 9, SIGNUP_START_ROW + SPK2_ROW_IDX);
+  setSpeakerCells(toastmasterDetails, 10, SIGNUP_START_ROW + SPK3_ROW_IDX);
 }
 
 function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
