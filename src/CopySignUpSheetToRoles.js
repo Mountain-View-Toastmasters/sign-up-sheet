@@ -9,8 +9,8 @@
 // The indices of the cells that the current entry in
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
-const SIGNUP_START_ROW = 7;
-const SIGNUP_END_ROW = 27;
+const SIGNUP_START_ROW = 2;
+const SIGNUP_END_ROW = 22;
 const SIGNUP_START_COL = 2;
 const SIGNUP_END_COL = 9;
 

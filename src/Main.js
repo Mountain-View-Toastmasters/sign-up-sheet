@@ -3,7 +3,7 @@
 /**
  * Runs scripts to copy latest signup sheet and toastmaster
  *  details into Roles
- * @returns updatedRow The row where all sign up 
+ * @returns updatedRow The row where all sign up
  *  details have been copied into
  */
 function copyAllSignUpDetails() {
@@ -62,6 +62,10 @@ function onOpen() {
         .createMenu("Officers Only")
         // ensure items in this submenu have a confirmation prompt
         .addItem("Advance Sign Up Sheet", "clearAndAdvanceSignUp")
+        .addItem(
+          "Reset Toastmasters Details",
+          "resetToastmasterDetailsFormulas"
+        )
     )
     .addToUi();
 }
