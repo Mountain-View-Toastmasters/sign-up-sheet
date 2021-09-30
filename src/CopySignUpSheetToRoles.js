@@ -36,7 +36,7 @@ var PROJECT_COL_IDX = 7;
 // By naming each row in the spreadsheet, it should be relatively simple to add
 // or remove rows without having explicitly enumerate their indices. This is
 // 0-offset from the start location of the rows.
-const ROW_NAMES = [
+const SIGNUP_ROW_NAMES = [
   "meetingHeader",
   "signUpHeader",
   "sergeantAtArms",
@@ -59,8 +59,8 @@ const ROW_NAMES = [
   "waitlistSpeaker1",
   "waitlistSpeaker2",
 ];
-const ROW_MAPPING = Object.fromEntries(
-  ROW_NAMES.map((name, index) => [name, index])
+const SIGNUP_ROW_MAP = Object.fromEntries(
+  SIGNUP_ROW_NAMES.map((name, index) => [name, index])
 );
 
 // Helpers and Classes
@@ -108,22 +108,22 @@ class SignUpDetails {
   constructor() {
     const signupsData = getSignUpSheetData();
 
-    this.date = signupsData[ROW_MAPPING["meetingHeader"]][DATE_COL_IDX];
+    this.date = signupsData[SIGNUP_ROW_MAP["meetingHeader"]][DATE_COL_IDX];
     this.meetingLocation =
-      signupsData[ROW_MAPPING["meetingHeader"]][MEETING_LOCATION_COL_IDX];
+      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][MEETING_LOCATION_COL_IDX];
 
     // helper function to keep things compact
-    let rows_between = (start, end) => between(ROW_NAMES, start, end);
+    let rows_between = (start, end) => between(SIGNUP_ROW_NAMES, start, end);
 
     for (let name of rows_between("sergeantAtArms", "tableTopicsMaster").concat(
       rows_between("evaluator1", "evaluator3")
     )) {
-      this[name] = signupsData[ROW_MAPPING[name]][NAME_COL_IDX];
+      this[name] = signupsData[SIGNUP_ROW_MAP[name]][NAME_COL_IDX];
     }
     for (let name of rows_between("speaker1", "speaker3").concat(
       rows_between("waitlistSpeaker1", "waitlistSpeaker2")
     )) {
-      this[name] = new SpeechDetails(signupsData, ROW_MAPPING[name]);
+      this[name] = new SpeechDetails(signupsData, SIGNUP_ROW_MAP[name]);
     }
   }
 

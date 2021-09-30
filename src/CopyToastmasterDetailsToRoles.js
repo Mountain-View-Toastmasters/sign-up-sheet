@@ -191,17 +191,17 @@ function resetToastmasterDetailsFormulas() {
   setSpeakerCells(
     toastmasterDetails,
     8,
-    SIGNUP_START_ROW + ROW_MAPPING["speaker1"]
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker1"]
   );
   setSpeakerCells(
     toastmasterDetails,
     9,
-    SIGNUP_START_ROW + ROW_MAPPING["speaker2"]
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker2"]
   );
   setSpeakerCells(
     toastmasterDetails,
     10,
-    SIGNUP_START_ROW + ROW_MAPPING["speaker3"]
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker3"]
   );
 }
 
