@@ -23,14 +23,19 @@ var MEETING_LOCATION_COL_IDX = 2;
 
 // Sign Up Sheet Headers
 //  (relative to current entry, 0-indexed)
-var CONFIRM_COL_IDX = 0;
-var ROLE_COL_IDX = 1;
-var NAME_COL_IDX = 2;
-var FULLNAME_COL_IDX = 3;
-var EMAIL_COL_IDX = 4;
-var PATHWAY_COL_IDX = 5;
-var LEVEL_COL_IDX = 6;
-var PROJECT_COL_IDX = 7;
+const SIGNUP_HEADER_NAMES = [
+  "confirmed",
+  "role",
+  "name",
+  "fullName",
+  "email",
+  "pathway",
+  "level",
+  "project",
+];
+const SIGNUP_HEADER_MAP = Object.fromEntries(
+  SIGNUP_HEADER_NAMES.map((name, index) => [name, index])
+);
 
 // Sign Up Sheet Rows
 // By naming each row in the spreadsheet, it should be relatively simple to add
@@ -67,14 +72,9 @@ const SIGNUP_ROW_MAP = Object.fromEntries(
 class SpeechDetails {
   constructor(signupsData, rowIdx) {
     const speakerRow = signupsData[rowIdx];
-    this.confirmed = speakerRow[CONFIRM_COL_IDX];
-    this.role = speakerRow[ROLE_COL_IDX];
-    this.name = speakerRow[NAME_COL_IDX];
-    this.fullName = speakerRow[FULLNAME_COL_IDX];
-    this.email = speakerRow[EMAIL_COL_IDX];
-    this.pathway = speakerRow[PATHWAY_COL_IDX];
-    this.level = speakerRow[LEVEL_COL_IDX];
-    this.project = speakerRow[PROJECT_COL_IDX];
+    for (let [name, index] of SIGNUP_HEADER_MAP.entries()) {
+      this[name] = speakerRow[index];
+    }
   }
 
   populateRolesSheet(rolesSheet, roleEntryRow, speakerCol) {
