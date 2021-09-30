@@ -18,14 +18,13 @@ const SIGNUP_END_COL = 9;
 // These are relative to the current entry in the
 //    sign up sheet and NOT the entire spreadsheet
 //    (0-indexed)
-var DATE_ROW_IDX = 0;
 var DATE_COL_IDX = 1;
+var MEETING_LOCATION_COL_IDX = 2;
 
 // Sign Up Sheet Headers
 //  (relative to current entry, 0-indexed)
 var CONFIRM_COL_IDX = 0;
 var ROLE_COL_IDX = 1;
-var MEETING_LOCATION_IDX = 2;
 var NAME_COL_IDX = 2;
 var FULLNAME_COL_IDX = 3;
 var EMAIL_COL_IDX = 4;
@@ -34,28 +33,35 @@ var LEVEL_COL_IDX = 6;
 var PROJECT_COL_IDX = 7;
 
 // Sign Up Sheet Rows
-//  (relative to current entry, 0-indexed)
-var MEETING_HEADER_ROW_IDX = 0;
-var SIGN_UP_HEADER_ROW_IDX = 1;
-var SAA_ROW_IDX = 2;
-var SECRETARY_ROW_IDX = 3;
-var TMOD_ROW_IDX = 4;
-var JKM_ROW_IDX = 5;
-var GE_ROW_IDX = 6;
-var REC_ROW_IDX = 7;
-var TIM_ROW_IDX = 8;
-var AHC_ROW_IDX = 9;
-var GRAM_ROW_IDX = 10;
-var TTM_ROW_IDX = 11;
-var SPK_HEADER_ROW_IDX = 12;
-var SPK1_ROW_IDX = 13;
-var SPK2_ROW_IDX = 14;
-var SPK3_ROW_IDX = 15;
-var EVAL1_ROW_IDX = 16;
-var EVAL2_ROW_IDX = 17;
-var EVAL3_ROW_IDX = 18;
-var WLSPK1_ROW_IDX = 19;
-var WLSPK2_ROW_IDX = 20;
+// By naming each row in the spreadsheet, it should be relatively simple to add
+// or remove rows without having explicitly enumerate their indices. This is
+// 0-offset from the start location of the rows.
+const ROW_NAMES = [
+  "meetingHeader",
+  "signUpHeader",
+  "sergeantAtArms",
+  "secretary",
+  "toastmaster",
+  "jokemaster",
+  "generalEvaluator",
+  "recorder",
+  "timer",
+  "ahCounter",
+  "wordmasterGrammarian",
+  "tableTopicsMaster",
+  "speakerHeader",
+  "speaker1",
+  "speaker2",
+  "speaker3",
+  "evaluator1",
+  "evaluator2",
+  "evaluator3",
+  "waitlistSpeaker1",
+  "waitlistSpeaker2",
+];
+const ROW_MAPPING = Object.fromEntries(
+  ROW_NAMES.map((name, index) => [name, index])
+);
 
 // Helpers and Classes
 class SpeechDetails {
@@ -87,31 +93,38 @@ class SpeechDetails {
   }
 }
 
+/// Slice a list based on the location of two entries in the list inclusive.
+/// Throws an exception if the resulting slice is empty. Assumes all entires are
+/// unique.
+function between(arr, first, last) {
+  let sliced = arr.slice(arr.indexOf(first), arr.indexOf(last) + 1);
+  if (sliced.length == 0) {
+    throw "sliced list is empty";
+  }
+  return sliced;
+}
+
 class SignUpDetails {
   constructor() {
     const signupsData = getSignUpSheetData();
 
-    this.date = signupsData[DATE_ROW_IDX][DATE_COL_IDX];
+    this.date = signupsData[ROW_MAPPING["meetingHeader"]][DATE_COL_IDX];
     this.meetingLocation =
-      signupsData[MEETING_HEADER_ROW_IDX][MEETING_LOCATION_IDX];
-    this.sergeantAtArms = signupsData[SAA_ROW_IDX][NAME_COL_IDX];
-    this.secretary = signupsData[SECRETARY_ROW_IDX][NAME_COL_IDX];
-    this.toastmaster = signupsData[TMOD_ROW_IDX][NAME_COL_IDX];
-    this.jokemaster = signupsData[JKM_ROW_IDX][NAME_COL_IDX];
-    this.generalEvaluator = signupsData[GE_ROW_IDX][NAME_COL_IDX];
-    this.recorder = signupsData[REC_ROW_IDX][NAME_COL_IDX];
-    this.timer = signupsData[TIM_ROW_IDX][NAME_COL_IDX];
-    this.ahCounter = signupsData[AHC_ROW_IDX][NAME_COL_IDX];
-    this.wordmasterGrammarian = signupsData[GRAM_ROW_IDX][NAME_COL_IDX];
-    this.tableTopicsMaster = signupsData[TTM_ROW_IDX][NAME_COL_IDX];
-    this.speaker1 = new SpeechDetails(signupsData, SPK1_ROW_IDX);
-    this.speaker2 = new SpeechDetails(signupsData, SPK2_ROW_IDX);
-    this.speaker3 = new SpeechDetails(signupsData, SPK3_ROW_IDX);
-    this.evaluator1 = signupsData[EVAL1_ROW_IDX][NAME_COL_IDX];
-    this.evaluator2 = signupsData[EVAL2_ROW_IDX][NAME_COL_IDX];
-    this.evaluator3 = signupsData[EVAL3_ROW_IDX][NAME_COL_IDX];
-    this.waitlistSpeaker1 = new SpeechDetails(signupsData, WLSPK1_ROW_IDX);
-    this.waitlistSpeaker2 = new SpeechDetails(signupsData, WLSPK2_ROW_IDX);
+      signupsData[ROW_MAPPING["meetingHeader"]][MEETING_LOCATION_COL_IDX];
+
+    // helper function to keep things compact
+    let rows_between = (start, end) => between(ROW_NAMES, start, end);
+
+    for (let name of rows_between("sergeantAtArms", "tableTopicsMaster").concat(
+      rows_between("evaluator1", "evaluator3")
+    )) {
+      this[name] = signupsData[ROW_MAPPING[name]][NAME_COL_IDX];
+    }
+    for (let name of rows_between("speaker1", "speaker3").concat(
+      rows_between("waitlistSpeaker1", "waitlistSpeaker2")
+    )) {
+      this[name] = new SpeechDetails(signupsData, ROW_MAPPING[name]);
+    }
   }
 
   populateRolesSheet(rolesSheet, roleEntryRow) {

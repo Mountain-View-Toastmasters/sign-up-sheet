@@ -188,9 +188,21 @@ function resetToastmasterDetailsFormulas() {
   currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C${SIGNUP_START_ROW}`);
 
   // Set Speaker 1 - 3 shared details
-  setSpeakerCells(toastmasterDetails, 8, SIGNUP_START_ROW + SPK1_ROW_IDX);
-  setSpeakerCells(toastmasterDetails, 9, SIGNUP_START_ROW + SPK2_ROW_IDX);
-  setSpeakerCells(toastmasterDetails, 10, SIGNUP_START_ROW + SPK3_ROW_IDX);
+  setSpeakerCells(
+    toastmasterDetails,
+    8,
+    SIGNUP_START_ROW + ROW_MAPPING["speaker1"]
+  );
+  setSpeakerCells(
+    toastmasterDetails,
+    9,
+    SIGNUP_START_ROW + ROW_MAPPING["speaker2"]
+  );
+  setSpeakerCells(
+    toastmasterDetails,
+    10,
+    SIGNUP_START_ROW + ROW_MAPPING["speaker3"]
+  );
 }
 
 function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
