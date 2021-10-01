@@ -10,7 +10,7 @@
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
 const SIGNUP_START_ROW = 2;
-const SIGNUP_END_ROW = 22;
+const SIGNUP_END_ROW = 23;
 const SIGNUP_START_COL = 2;
 const SIGNUP_END_COL = 7;
 
@@ -45,6 +45,7 @@ const SIGNUP_ROW_NAMES = [
   "signUpHeader",
   "sergeantAtArms",
   "secretary",
+  "techChair",
   "toastmaster",
   "jokemaster",
   "generalEvaluator",
