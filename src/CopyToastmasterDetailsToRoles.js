@@ -185,7 +185,9 @@ function resetToastmasterDetailsFormulas() {
   // NOTE(acmiyaguchi): variables are generally defined in
   // CopySignUpSheetToRoles, but I don't appreciate the design choice of gs to
   // share variable scope across files. It's very confusing.
-  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C${SIGNUP_START_ROW}`);
+  // Also, it may be useful to make this an integer offset from the start of the
+  // sheet at some point.
+  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!D${SIGNUP_START_ROW}`);
 
   // Set Speaker 1 - 3 shared details
   setSpeakerCells(
@@ -211,8 +213,9 @@ function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
   var levelCell = toastmasterDetails.getRange(`D${tmDetailsRow}`);
   var projectCell = toastmasterDetails.getRange(`E${tmDetailsRow}`);
 
-  speakerCell.setFormula(`='${SIGNUP_SHEET_NAME}'!D${signUpSheetRow}`);
-  pathNameCell.setFormula(`='${SIGNUP_SHEET_NAME}'!G${signUpSheetRow}`);
-  levelCell.setFormula(`='${SIGNUP_SHEET_NAME}'!H${signUpSheetRow}`);
-  projectCell.setFormula(`='${SIGNUP_SHEET_NAME}'!I${signUpSheetRow}`);
+  // NOTE: these must be manually updated if the columns change at all
+  speakerCell.setFormula(`='${SIGNUP_SHEET_NAME}'!E${signUpSheetRow}`);
+  pathNameCell.setFormula(`='${SIGNUP_SHEET_NAME}'!F${signUpSheetRow}`);
+  levelCell.setFormula(`='${SIGNUP_SHEET_NAME}'!G${signUpSheetRow}`);
+  projectCell.setFormula(`='${SIGNUP_SHEET_NAME}'!H${signUpSheetRow}`);
 }

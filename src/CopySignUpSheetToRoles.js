@@ -12,23 +12,22 @@
 const SIGNUP_START_ROW = 2;
 const SIGNUP_END_ROW = 22;
 const SIGNUP_START_COL = 2;
-const SIGNUP_END_COL = 9;
+const SIGNUP_END_COL = 7;
 
 // Sign Up Sheet Field References
 // These are relative to the current entry in the
 //    sign up sheet and NOT the entire spreadsheet
 //    (0-indexed)
-var DATE_COL_IDX = 1;
-var MEETING_LOCATION_COL_IDX = 2;
+const SIGNUP_DATE_COL_IDX = 2;
+const SIGNUP_MEETING_LOCATION_COL_IDX = 3;
 
 // Sign Up Sheet Headers
 //  (relative to current entry, 0-indexed)
 const SIGNUP_HEADER_NAMES = [
   "confirmed",
+  "location",
   "role",
   "name",
-  "fullName",
-  "email",
   "pathway",
   "level",
   "project",
@@ -72,7 +71,7 @@ const SIGNUP_ROW_MAP = Object.fromEntries(
 class SpeechDetails {
   constructor(signupsData, rowIdx) {
     const speakerRow = signupsData[rowIdx];
-    for (let [name, index] of SIGNUP_HEADER_MAP.entries()) {
+    for (let [name, index] of Object.entries(SIGNUP_HEADER_MAP)) {
       this[name] = speakerRow[index];
     }
   }
@@ -108,9 +107,12 @@ class SignUpDetails {
   constructor() {
     const signupsData = getSignUpSheetData();
 
-    this.date = signupsData[SIGNUP_ROW_MAP["meetingHeader"]][DATE_COL_IDX];
+    this.date =
+      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][SIGNUP_DATE_COL_IDX];
     this.meetingLocation =
-      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][MEETING_LOCATION_COL_IDX];
+      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][
+        SIGNUP_MEETING_LOCATION_COL_IDX
+      ];
 
     // helper function to keep things compact
     let rows_between = (start, end) => between(SIGNUP_ROW_NAMES, start, end);
@@ -118,7 +120,7 @@ class SignUpDetails {
     for (let name of rows_between("sergeantAtArms", "tableTopicsMaster").concat(
       rows_between("evaluator1", "evaluator3")
     )) {
-      this[name] = signupsData[SIGNUP_ROW_MAP[name]][NAME_COL_IDX];
+      this[name] = signupsData[SIGNUP_ROW_MAP[name]][SIGNUP_HEADER_MAP["name"]];
     }
     for (let name of rows_between("speaker1", "speaker3").concat(
       rows_between("waitlistSpeaker1", "waitlistSpeaker2")
