@@ -1,5 +1,5 @@
-const __SIGNUP_SHEET_HEADER_ROW_NUM = 7;
-const __SIGNUP_SHEET_SECTION_START_COL_NUM = 2;
+const __SIGNUP_SHEET_HEADER_ROW_NUM = SIGNUP_START_ROW;
+const __SIGNUP_SHEET_SECTION_START_COL_NUM = SIGNUP_START_COL;
 
 function advanceSignUpSheet() {
   var signUpSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
@@ -40,6 +40,7 @@ function clearOutCurrentSignUp(signUpSheet, signUpTemplate) {
 }
 
 function deleteCurrentSignupSection(signUpSheet, signUpTemplate) {
+  // TODO: remove extra columns if they aren't being used for anything
   signUpSheet.showColumns(5);
   signUpSheet.showColumns(6);
 
@@ -48,8 +49,8 @@ function deleteCurrentSignupSection(signUpSheet, signUpTemplate) {
       __SIGNUP_SHEET_HEADER_ROW_NUM,
       __SIGNUP_SHEET_SECTION_START_COL_NUM,
       signUpTemplate.getLastRow(),
-      signUpTemplate.getLastColumn() + 2
-    ) // with 2 header cols
+      signUpTemplate.getLastColumn()
+    )
     .deleteCells(SpreadsheetApp.Dimension.COLUMNS);
 }
 
