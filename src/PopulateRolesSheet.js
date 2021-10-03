@@ -9,73 +9,79 @@
 // Roles Sheet Column References
 //  Note: some are not currently used
 //  These are 1-indexed relative to the Roles spreadsheet
-var Date_COL = 1;
-var Meeting_Theme_COL = 2;
-var Word_of_the_Day_COL = 3;
-var Word_of_the_Day_Part_of_Speech_COL = 4;
-var Word_of_the_Day_Definition_COL = 5;
-var Word_of_the_Day_Sample_Sentence_COL = 6;
-var Meeting_Location_COL = 7;
-var Sergeant_at_Arms_COL = 8;
-var Secretary_COL = 9;
-var Toastmaster_COL = 10;
-var Jokemaster_COL = 11;
-var General_Evaluator_COL = 12;
-var Recorder_COL = 13;
-var Timer_COL = 14;
-var Ah_Counter_COL = 15;
-var Wordmaster_Grammarian_COL = 16;
-var Table_Topics_Master_COL = 17;
-var Speaker_1_COL = 18;
-var Speaker_1_Pathway_COL = 19;
-var Speaker_1_Level_COL = 20;
-var Speaker_1_Project_COL = 21;
-var Speaker_1_Speech_Title_COL = 22;
-var Speaker_1_Min_Time_COL = 23;
-var Speaker_1_Max_Time_COL = 24;
-var Speaker_2_COL = 25;
-var Speaker_2_Pathway_COL = 26;
-var Speaker_2_Level_COL = 27;
-var Speaker_2_Project_COL = 28;
-var Speaker_2_Speech_Title_COL = 29;
-var Speaker_2_Min_Time_COL = 30;
-var Speaker_2_Max_Time_COL = 31;
-var Speaker_3_COL = 32;
-var Speaker_3_Pathway_COL = 33;
-var Speaker_3_Project_COL = 34;
-var Speaker_3_Level_COL = 35;
-var Speaker_3_Speech_Title_COL = 36;
-var Speaker_3_Min_Time_COL = 37;
-var Speaker_3_Max_Time_COL = 38;
-var Speaker_4_COL = 39;
-var Speaker_4_Pathway_COL = 40;
-var Speaker_4_Project_COL = 41;
-var Speaker_4_Level_COL = 42;
-var Speaker_4_Speech_Title_COL = 43;
-var Speaker_4_Min_Time_COL = 44;
-var Speaker_4_Max_Time_COL = 45;
-var Speaker_5_COL = 46;
-var Speaker_5_Pathway_COL = 47;
-var Speaker_5_Level_COL = 48;
-var Speaker_5_Project_COL = 49;
-var Speaker_5_Speech_Title_COL = 50;
-var Speaker_5_Min_Time_COL = 51;
-var Speaker_5_Max_Time_COL = 52;
-var Evaluator_1_COL = 53;
-var Evaluator_2_COL = 54;
-var Evaluator_3_COL = 55;
-var Evaluator_4_COL = 56;
-var Evaluator_5_COL = 57;
-var Waiting_List_Speaker_1_COL = 58;
-var Waiting_List_Speaker_2_COL = 59;
-var Club_President_COL = 60;
-var VP_Education_COL = 61;
-var VP_Membership_COL = 62;
-var VP_Public_Relations_COL = 63;
-var Club_Secretary_COL = 64;
-var Club_Treasurer_COL = 65;
-var Club_Sergeant_at_Arms_COL = 66;
-var Mentorship_Chair_COL = 67;
+// TODO(acmiyaguchi): add simple check to ensure these are in the correct order
+const ROLES_COL_NAMES = [
+  "Date",
+  "Meeting_Theme",
+  "Word_of_the_Day",
+  "Word_of_the_Day_Part_of_Speech",
+  "Word_of_the_Day_Definition",
+  "Word_of_the_Day_Sample_Sentence",
+  "Meeting_Location",
+  "Sergeant_at_Arms",
+  "Secretary",
+  "Toastmaster",
+  "Jokemaster",
+  "General_Evaluator",
+  "Recorder",
+  "Timer",
+  "Ah_Counter",
+  "Wordmaster_Grammarian",
+  "Table_Topics_Master",
+  "Speaker_1",
+  "Speaker_1_Pathway",
+  "Speaker_1_Level",
+  "Speaker_1_Project",
+  "Speaker_1_Speech_Title",
+  "Speaker_1_Min_Time",
+  "Speaker_1_Max_Time",
+  "Speaker_2",
+  "Speaker_2_Pathway",
+  "Speaker_2_Level",
+  "Speaker_2_Project",
+  "Speaker_2_Speech_Title",
+  "Speaker_2_Min_Time",
+  "Speaker_2_Max_Time",
+  "Speaker_3",
+  "Speaker_3_Pathway",
+  "Speaker_3_Project",
+  "Speaker_3_Level",
+  "Speaker_3_Speech_Title",
+  "Speaker_3_Min_Time",
+  "Speaker_3_Max_Time",
+  "Speaker_4",
+  "Speaker_4_Pathway",
+  "Speaker_4_Project",
+  "Speaker_4_Level",
+  "Speaker_4_Speech_Title",
+  "Speaker_4_Min_Time",
+  "Speaker_4_Max_Time",
+  "Speaker_5",
+  "Speaker_5_Pathway",
+  "Speaker_5_Level",
+  "Speaker_5_Project",
+  "Speaker_5_Speech_Title",
+  "Speaker_5_Min_Time",
+  "Speaker_5_Max_Time",
+  "Evaluator_1",
+  "Evaluator_2",
+  "Evaluator_3",
+  "Evaluator_4",
+  "Evaluator_5",
+  "Waiting_List_Speaker_1",
+  "Waiting_List_Speaker_2",
+  "Club_President",
+  "VP_Education",
+  "VP_Membership",
+  "VP_Public_Relations",
+  "Club_Secretary",
+  "Club_Treasurer",
+  "Club_Sergeant_at_Arms",
+  "Mentorship_Chair",
+];
+const ROLES_COL_MAP = Object.fromEntries(
+  ROLES_COL_NAMES.map((name, index) => [name, index + 1])
+);
 
 // A mapping of the offset for different speaker columns
 var Speaker_COL_OFFSET = 0;
@@ -95,7 +101,9 @@ function getAllRolesDates() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
     ROLES_SHEET_NAME
   );
-  return sheet.getRange(1, Date_COL, sheet.getLastRow()).getValues();
+  return sheet
+    .getRange(1, ROLES_COL_MAP["Date"], sheet.getLastRow())
+    .getValues();
 }
 
 // Check if the current entry is within the last few columns
@@ -106,7 +114,11 @@ function getMostRecentRows(rowsToCheck = 10) {
     ROLES_SHEET_NAME
   );
   var lastFilledRow = sheet.getLastRow();
-  return sheet.getRange(lastFilledRow - rowsToCheck + 1, Date_COL, rowsToCheck);
+  return sheet.getRange(
+    lastFilledRow - rowsToCheck + 1,
+    ROLES_COL_MAP["Date"],
+    rowsToCheck
+  );
 }
 
 // Check whether the date of interest is in the spreadsheet's last few rows

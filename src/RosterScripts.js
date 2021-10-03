@@ -114,14 +114,23 @@ function copyOfficersToRoles(dateString) {
   };
 
   // Set Cells for Officers
-  setCell(Club_President_COL, officers[OfficerRole.president]);
-  setCell(VP_Education_COL, officers[OfficerRole.vpEducation]);
-  setCell(VP_Membership_COL, officers[OfficerRole.vpMembership]);
-  setCell(VP_Public_Relations_COL, officers[OfficerRole.vpPublicRelations]);
-  setCell(Club_Secretary_COL, officers[OfficerRole.clubSecretary]);
-  setCell(Club_Treasurer_COL, officers[OfficerRole.clubTreasurer]);
-  setCell(Club_Sergeant_at_Arms_COL, officers[OfficerRole.sergeantAtArms]);
-  setCell(Mentorship_Chair_COL, officers[OfficerRole.chairOfMentorship]);
+  setCell(ROLES_COL_MAP["Club_President"], officers[OfficerRole.president]);
+  setCell(ROLES_COL_MAP["VP_Education"], officers[OfficerRole.vpEducation]);
+  setCell(ROLES_COL_MAP["VP_Membership"], officers[OfficerRole.vpMembership]);
+  setCell(
+    ROLES_COL_MAP["VP_Public_Relations"],
+    officers[OfficerRole.vpPublicRelations]
+  );
+  setCell(ROLES_COL_MAP["Club_Secretary"], officers[OfficerRole.clubSecretary]);
+  setCell(ROLES_COL_MAP["Club_Treasurer"], officers[OfficerRole.clubTreasurer]);
+  setCell(
+    ROLES_COL_MAP["Club_Sergeant_at_Arms"],
+    officers[OfficerRole.sergeantAtArms]
+  );
+  setCell(
+    ROLES_COL_MAP["Mentorship_Chair"],
+    officers[OfficerRole.chairOfMentorship]
+  );
 }
 
 // Function to clear the roster selections

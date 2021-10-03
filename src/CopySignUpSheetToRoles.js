@@ -136,39 +136,57 @@ class SignUpDetails {
     };
 
     // Fill out meeting metadata (minus already filled-in date)
-    setCell(Meeting_Location_COL, this.meetingLocation);
+    setCell(ROLES_COL_MAP["Meeting_Location"], this.meetingLocation);
 
     // Fill out Functionaries
-    setCell(Sergeant_at_Arms_COL, this.sergeantAtArms);
-    setCell(Secretary_COL, this.secretary);
-    setCell(Toastmaster_COL, this.toastmaster);
-    setCell(Jokemaster_COL, this.jokemaster);
-    setCell(General_Evaluator_COL, this.generalEvaluator);
-    setCell(Recorder_COL, this.recorder);
-    setCell(Timer_COL, this.timer);
-    setCell(Ah_Counter_COL, this.ahCounter);
-    setCell(Wordmaster_Grammarian_COL, this.wordmasterGrammarian);
-    setCell(Table_Topics_Master_COL, this.tableTopicsMaster);
+    setCell(ROLES_COL_MAP["Sergeant_at_Arms"], this.sergeantAtArms);
+    setCell(ROLES_COL_MAP["Secretary"], this.secretary);
+    setCell(ROLES_COL_MAP["Toastmaster"], this.toastmaster);
+    setCell(ROLES_COL_MAP["Jokemaster"], this.jokemaster);
+    setCell(ROLES_COL_MAP["General_Evaluator"], this.generalEvaluator);
+    setCell(ROLES_COL_MAP["Recorder"], this.recorder);
+    setCell(ROLES_COL_MAP["Timer"], this.timer);
+    setCell(ROLES_COL_MAP["Ah_Counter"], this.ahCounter);
+    setCell(ROLES_COL_MAP["Wordmaster_Grammarian"], this.wordmasterGrammarian);
+    setCell(ROLES_COL_MAP["Table_Topics_Master"], this.tableTopicsMaster);
 
     // Fill out Speakers
     this._populateSpeakerCells(rolesSheet, roleEntryRow);
 
     // Fill out Evaluators
-    setCell(Evaluator_1_COL, this.evaluator1);
-    setCell(Evaluator_2_COL, this.evaluator2);
-    setCell(Evaluator_3_COL, this.evaluator3);
+    setCell(ROLES_COL_MAP["Evaluator_1"], this.evaluator1);
+    setCell(ROLES_COL_MAP["Evaluator_2"], this.evaluator2);
+    setCell(ROLES_COL_MAP["Evaluator_3"], this.evaluator3);
     // TODO(bshaibu): We might want to handle adding a 4th and 5th evaluator to the sign up sheet
 
     // Fill out Waiting list speakers
-    setCell(Waiting_List_Speaker_1_COL, this.waitlistSpeaker1.name);
-    setCell(Waiting_List_Speaker_2_COL, this.waitlistSpeaker2.name);
+    setCell(
+      ROLES_COL_MAP["Waiting_List_Speaker_1"],
+      this.waitlistSpeaker1.name
+    );
+    setCell(
+      ROLES_COL_MAP["Waiting_List_Speaker_2"],
+      this.waitlistSpeaker2.name
+    );
     // TODO(bshaibu): Do we want to save anything beside the waiting list speaker's name?
   }
 
   _populateSpeakerCells(rolesSheet, roleEntryRow) {
-    this.speaker1.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_1_COL);
-    this.speaker2.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_2_COL);
-    this.speaker3.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_3_COL);
+    this.speaker1.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_1"]
+    );
+    this.speaker2.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_2"]
+    );
+    this.speaker3.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_3"]
+    );
     // TODO(bshaibu): We might want to handle adding a 4th and 5th speaker to the sign up sheet
   }
 }

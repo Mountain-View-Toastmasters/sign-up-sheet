@@ -70,19 +70,37 @@ class ToastmasterDetails {
     };
 
     // Fill out meeting metadata (minus already filled-in date)
-    setCell(Meeting_Theme_COL, this.meetingTheme);
-    setCell(Word_of_the_Day_COL, this.wordOfTheDay);
-    setCell(Word_of_the_Day_Part_of_Speech_COL, this.wordOfTheDayPartOfSpeech);
-    setCell(Word_of_the_Day_Definition_COL, this.wordOfTheDayDescription);
+    setCell(ROLES_COL_MAP["Meeting_Theme"], this.meetingTheme);
+    setCell(ROLES_COL_MAP["Word_of_the_Day"], this.wordOfTheDay);
     setCell(
-      Word_of_the_Day_Sample_Sentence_COL,
+      ROLES_COL_MAP["Word_of_the_Day_Part_of_Speech"],
+      this.wordOfTheDayPartOfSpeech
+    );
+    setCell(
+      ROLES_COL_MAP["Word_of_the_Day_Definition"],
+      this.wordOfTheDayDescription
+    );
+    setCell(
+      ROLES_COL_MAP["Word_of_the_Day_Sample_Sentence"],
       this.wordOfTheDaySampleSentence
     );
 
     // Fill out Speaker Details
-    this.speaker1.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_1_COL);
-    this.speaker2.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_2_COL);
-    this.speaker3.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_3_COL);
+    this.speaker1.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_1"]
+    );
+    this.speaker2.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_2"]
+    );
+    this.speaker3.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_3"]
+    );
   }
 }
 
