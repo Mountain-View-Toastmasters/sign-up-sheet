@@ -93,17 +93,6 @@ class SpeechDetails {
   }
 }
 
-/// Slice a list based on the location of two entries in the list inclusive.
-/// Throws an exception if the resulting slice is empty. Assumes all entires are
-/// unique.
-function between(arr, first, last) {
-  let sliced = arr.slice(arr.indexOf(first), arr.indexOf(last) + 1);
-  if (sliced.length == 0) {
-    throw "sliced list is empty";
-  }
-  return sliced;
-}
-
 class SignUpDetails {
   constructor() {
     const signupsData = getSignUpSheetData();
@@ -116,15 +105,19 @@ class SignUpDetails {
       ];
 
     // helper function to keep things compact
-    let rows_between = (start, end) => between(SIGNUP_ROW_NAMES, start, end);
+    let rowsBetween = (start, end) =>
+      sliceRowsBetweenValues(SIGNUP_ROW_NAMES, start, end);
 
-    for (let name of rows_between("sergeantAtArms", "tableTopicsMaster").concat(
-      rows_between("evaluator1", "evaluator3")
+    // Add general roles to to signup details
+    for (let name of rowsBetween("sergeantAtArms", "tableTopicsMaster").concat(
+      rowsBetween("evaluator1", "evaluator3")
     )) {
       this[name] = signupsData[SIGNUP_ROW_MAP[name]][SIGNUP_HEADER_MAP["name"]];
     }
-    for (let name of rows_between("speaker1", "speaker3").concat(
-      rows_between("waitlistSpeaker1", "waitlistSpeaker2")
+
+    // Add Speaker information to signup details
+    for (let name of rowsBetween("speaker1", "speaker3").concat(
+      rowsBetween("waitlistSpeaker1", "waitlistSpeaker2")
     )) {
       this[name] = new SpeechDetails(signupsData, SIGNUP_ROW_MAP[name]);
     }

@@ -36,3 +36,14 @@ function normalizeName(name) {
     .split(/\s+/)
     .join("_");
 }
+
+/// Slice a list based on the location of two entries in the list inclusive.
+/// Throws an exception if the resulting slice is empty. Assumes all entries are
+/// unique.
+function sliceRowsBetweenValues(arr, first, last) {
+  let sliced = arr.slice(arr.indexOf(first), arr.indexOf(last) + 1);
+  if (sliced.length == 0) {
+    throw "sliced list is empty";
+  }
+  return sliced;
+}
