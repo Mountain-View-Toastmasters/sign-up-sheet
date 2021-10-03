@@ -20,6 +20,7 @@ const ROLES_COL_NAMES = [
   "Meeting_Location",
   "Sergeant_at_Arms",
   "Secretary",
+  "Tech_Chair",
   "Toastmaster",
   "Jokemaster",
   "General_Evaluator",

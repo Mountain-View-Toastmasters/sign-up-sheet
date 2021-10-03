@@ -141,6 +141,7 @@ class SignUpDetails {
     // Fill out Functionaries
     setCell(ROLES_COL_MAP["Sergeant_at_Arms"], this.sergeantAtArms);
     setCell(ROLES_COL_MAP["Secretary"], this.secretary);
+    setCell(ROLES_COL_MAP["Tech_Chair"], this.techChair);
     setCell(ROLES_COL_MAP["Toastmaster"], this.toastmaster);
     setCell(ROLES_COL_MAP["Jokemaster"], this.jokemaster);
     setCell(ROLES_COL_MAP["General_Evaluator"], this.generalEvaluator);
