@@ -70,19 +70,37 @@ class ToastmasterDetails {
     };
 
     // Fill out meeting metadata (minus already filled-in date)
-    setCell(Meeting_Theme_COL, this.meetingTheme);
-    setCell(Word_of_the_Day_COL, this.wordOfTheDay);
-    setCell(Word_of_the_Day_Part_of_Speech_COL, this.wordOfTheDayPartOfSpeech);
-    setCell(Word_of_the_Day_Definition_COL, this.wordOfTheDayDescription);
+    setCell(ROLES_COL_MAP["Meeting_Theme"], this.meetingTheme);
+    setCell(ROLES_COL_MAP["Word_of_the_Day"], this.wordOfTheDay);
     setCell(
-      Word_of_the_Day_Sample_Sentence_COL,
+      ROLES_COL_MAP["Word_of_the_Day_Part_of_Speech"],
+      this.wordOfTheDayPartOfSpeech
+    );
+    setCell(
+      ROLES_COL_MAP["Word_of_the_Day_Definition"],
+      this.wordOfTheDayDescription
+    );
+    setCell(
+      ROLES_COL_MAP["Word_of_the_Day_Sample_Sentence"],
       this.wordOfTheDaySampleSentence
     );
 
     // Fill out Speaker Details
-    this.speaker1.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_1_COL);
-    this.speaker2.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_2_COL);
-    this.speaker3.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_3_COL);
+    this.speaker1.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_1"]
+    );
+    this.speaker2.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_2"]
+    );
+    this.speaker3.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_3"]
+    );
   }
 }
 
@@ -185,12 +203,26 @@ function resetToastmasterDetailsFormulas() {
   // NOTE(acmiyaguchi): variables are generally defined in
   // CopySignUpSheetToRoles, but I don't appreciate the design choice of gs to
   // share variable scope across files. It's very confusing.
-  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!C${SIGNUP_START_ROW}`);
+  // Also, it may be useful to make this an integer offset from the start of the
+  // sheet at some point.
+  currentDateCell.setFormula(`='${SIGNUP_SHEET_NAME}'!D${SIGNUP_START_ROW}`);
 
   // Set Speaker 1 - 3 shared details
-  setSpeakerCells(toastmasterDetails, 8, SIGNUP_START_ROW + SPK1_ROW_IDX);
-  setSpeakerCells(toastmasterDetails, 9, SIGNUP_START_ROW + SPK2_ROW_IDX);
-  setSpeakerCells(toastmasterDetails, 10, SIGNUP_START_ROW + SPK3_ROW_IDX);
+  setSpeakerCells(
+    toastmasterDetails,
+    8,
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker1"]
+  );
+  setSpeakerCells(
+    toastmasterDetails,
+    9,
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker2"]
+  );
+  setSpeakerCells(
+    toastmasterDetails,
+    10,
+    SIGNUP_START_ROW + SIGNUP_ROW_MAP["speaker3"]
+  );
 }
 
 function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
@@ -199,8 +231,9 @@ function setSpeakerCells(toastmasterDetails, tmDetailsRow, signUpSheetRow) {
   var levelCell = toastmasterDetails.getRange(`D${tmDetailsRow}`);
   var projectCell = toastmasterDetails.getRange(`E${tmDetailsRow}`);
 
-  speakerCell.setFormula(`='${SIGNUP_SHEET_NAME}'!D${signUpSheetRow}`);
-  pathNameCell.setFormula(`='${SIGNUP_SHEET_NAME}'!G${signUpSheetRow}`);
-  levelCell.setFormula(`='${SIGNUP_SHEET_NAME}'!H${signUpSheetRow}`);
-  projectCell.setFormula(`='${SIGNUP_SHEET_NAME}'!I${signUpSheetRow}`);
+  // NOTE: these must be manually updated if the columns change at all
+  speakerCell.setFormula(`='${SIGNUP_SHEET_NAME}'!E${signUpSheetRow}`);
+  pathNameCell.setFormula(`='${SIGNUP_SHEET_NAME}'!F${signUpSheetRow}`);
+  levelCell.setFormula(`='${SIGNUP_SHEET_NAME}'!G${signUpSheetRow}`);
+  projectCell.setFormula(`='${SIGNUP_SHEET_NAME}'!H${signUpSheetRow}`);
 }

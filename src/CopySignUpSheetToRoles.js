@@ -10,65 +10,71 @@
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
 const SIGNUP_START_ROW = 2;
-const SIGNUP_END_ROW = 22;
+const SIGNUP_END_ROW = 23;
 const SIGNUP_START_COL = 2;
-const SIGNUP_END_COL = 9;
+const SIGNUP_END_COL = 7;
 
 // Sign Up Sheet Field References
 // These are relative to the current entry in the
 //    sign up sheet and NOT the entire spreadsheet
 //    (0-indexed)
-var DATE_ROW_IDX = 0;
-var DATE_COL_IDX = 1;
+const SIGNUP_DATE_COL_IDX = 2;
+const SIGNUP_MEETING_LOCATION_COL_IDX = 3;
 
 // Sign Up Sheet Headers
 //  (relative to current entry, 0-indexed)
-var CONFIRM_COL_IDX = 0;
-var ROLE_COL_IDX = 1;
-var MEETING_LOCATION_IDX = 2;
-var NAME_COL_IDX = 2;
-var FULLNAME_COL_IDX = 3;
-var EMAIL_COL_IDX = 4;
-var PATHWAY_COL_IDX = 5;
-var LEVEL_COL_IDX = 6;
-var PROJECT_COL_IDX = 7;
+const SIGNUP_HEADER_NAMES = [
+  "confirmed",
+  "location",
+  "role",
+  "name",
+  "pathway",
+  "level",
+  "project",
+];
+const SIGNUP_HEADER_MAP = Object.fromEntries(
+  SIGNUP_HEADER_NAMES.map((name, index) => [name, index])
+);
 
 // Sign Up Sheet Rows
-//  (relative to current entry, 0-indexed)
-var MEETING_HEADER_ROW_IDX = 0;
-var SIGN_UP_HEADER_ROW_IDX = 1;
-var SAA_ROW_IDX = 2;
-var SECRETARY_ROW_IDX = 3;
-var TMOD_ROW_IDX = 4;
-var JKM_ROW_IDX = 5;
-var GE_ROW_IDX = 6;
-var REC_ROW_IDX = 7;
-var TIM_ROW_IDX = 8;
-var AHC_ROW_IDX = 9;
-var GRAM_ROW_IDX = 10;
-var TTM_ROW_IDX = 11;
-var SPK_HEADER_ROW_IDX = 12;
-var SPK1_ROW_IDX = 13;
-var SPK2_ROW_IDX = 14;
-var SPK3_ROW_IDX = 15;
-var EVAL1_ROW_IDX = 16;
-var EVAL2_ROW_IDX = 17;
-var EVAL3_ROW_IDX = 18;
-var WLSPK1_ROW_IDX = 19;
-var WLSPK2_ROW_IDX = 20;
+// By naming each row in the spreadsheet, it should be relatively simple to add
+// or remove rows without having explicitly enumerate their indices. This is
+// 0-offset from the start location of the rows.
+const SIGNUP_ROW_NAMES = [
+  "meetingHeader",
+  "signUpHeader",
+  "sergeantAtArms",
+  "secretary",
+  "techChair",
+  "toastmaster",
+  "jokemaster",
+  "generalEvaluator",
+  "recorder",
+  "timer",
+  "ahCounter",
+  "wordmasterGrammarian",
+  "tableTopicsMaster",
+  "speakerHeader",
+  "speaker1",
+  "speaker2",
+  "speaker3",
+  "evaluator1",
+  "evaluator2",
+  "evaluator3",
+  "waitlistSpeaker1",
+  "waitlistSpeaker2",
+];
+const SIGNUP_ROW_MAP = Object.fromEntries(
+  SIGNUP_ROW_NAMES.map((name, index) => [name, index])
+);
 
 // Helpers and Classes
 class SpeechDetails {
   constructor(signupsData, rowIdx) {
     const speakerRow = signupsData[rowIdx];
-    this.confirmed = speakerRow[CONFIRM_COL_IDX];
-    this.role = speakerRow[ROLE_COL_IDX];
-    this.name = speakerRow[NAME_COL_IDX];
-    this.fullName = speakerRow[FULLNAME_COL_IDX];
-    this.email = speakerRow[EMAIL_COL_IDX];
-    this.pathway = speakerRow[PATHWAY_COL_IDX];
-    this.level = speakerRow[LEVEL_COL_IDX];
-    this.project = speakerRow[PROJECT_COL_IDX];
+    for (let [name, index] of Object.entries(SIGNUP_HEADER_MAP)) {
+      this[name] = speakerRow[index];
+    }
   }
 
   populateRolesSheet(rolesSheet, roleEntryRow, speakerCol) {
@@ -91,27 +97,30 @@ class SignUpDetails {
   constructor() {
     const signupsData = getSignUpSheetData();
 
-    this.date = signupsData[DATE_ROW_IDX][DATE_COL_IDX];
+    this.date =
+      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][SIGNUP_DATE_COL_IDX];
     this.meetingLocation =
-      signupsData[MEETING_HEADER_ROW_IDX][MEETING_LOCATION_IDX];
-    this.sergeantAtArms = signupsData[SAA_ROW_IDX][NAME_COL_IDX];
-    this.secretary = signupsData[SECRETARY_ROW_IDX][NAME_COL_IDX];
-    this.toastmaster = signupsData[TMOD_ROW_IDX][NAME_COL_IDX];
-    this.jokemaster = signupsData[JKM_ROW_IDX][NAME_COL_IDX];
-    this.generalEvaluator = signupsData[GE_ROW_IDX][NAME_COL_IDX];
-    this.recorder = signupsData[REC_ROW_IDX][NAME_COL_IDX];
-    this.timer = signupsData[TIM_ROW_IDX][NAME_COL_IDX];
-    this.ahCounter = signupsData[AHC_ROW_IDX][NAME_COL_IDX];
-    this.wordmasterGrammarian = signupsData[GRAM_ROW_IDX][NAME_COL_IDX];
-    this.tableTopicsMaster = signupsData[TTM_ROW_IDX][NAME_COL_IDX];
-    this.speaker1 = new SpeechDetails(signupsData, SPK1_ROW_IDX);
-    this.speaker2 = new SpeechDetails(signupsData, SPK2_ROW_IDX);
-    this.speaker3 = new SpeechDetails(signupsData, SPK3_ROW_IDX);
-    this.evaluator1 = signupsData[EVAL1_ROW_IDX][NAME_COL_IDX];
-    this.evaluator2 = signupsData[EVAL2_ROW_IDX][NAME_COL_IDX];
-    this.evaluator3 = signupsData[EVAL3_ROW_IDX][NAME_COL_IDX];
-    this.waitlistSpeaker1 = new SpeechDetails(signupsData, WLSPK1_ROW_IDX);
-    this.waitlistSpeaker2 = new SpeechDetails(signupsData, WLSPK2_ROW_IDX);
+      signupsData[SIGNUP_ROW_MAP["meetingHeader"]][
+        SIGNUP_MEETING_LOCATION_COL_IDX
+      ];
+
+    // helper function to keep things compact
+    let rowsBetween = (start, end) =>
+      sliceRowsBetweenValues(SIGNUP_ROW_NAMES, start, end);
+
+    // Add general roles to to signup details
+    for (let name of rowsBetween("sergeantAtArms", "tableTopicsMaster").concat(
+      rowsBetween("evaluator1", "evaluator3")
+    )) {
+      this[name] = signupsData[SIGNUP_ROW_MAP[name]][SIGNUP_HEADER_MAP["name"]];
+    }
+
+    // Add Speaker information to signup details
+    for (let name of rowsBetween("speaker1", "speaker3").concat(
+      rowsBetween("waitlistSpeaker1", "waitlistSpeaker2")
+    )) {
+      this[name] = new SpeechDetails(signupsData, SIGNUP_ROW_MAP[name]);
+    }
   }
 
   populateRolesSheet(rolesSheet, roleEntryRow) {
@@ -120,39 +129,58 @@ class SignUpDetails {
     };
 
     // Fill out meeting metadata (minus already filled-in date)
-    setCell(Meeting_Location_COL, this.meetingLocation);
+    setCell(ROLES_COL_MAP["Meeting_Location"], this.meetingLocation);
 
     // Fill out Functionaries
-    setCell(Sergeant_at_Arms_COL, this.sergeantAtArms);
-    setCell(Secretary_COL, this.secretary);
-    setCell(Toastmaster_COL, this.toastmaster);
-    setCell(Jokemaster_COL, this.jokemaster);
-    setCell(General_Evaluator_COL, this.generalEvaluator);
-    setCell(Recorder_COL, this.recorder);
-    setCell(Timer_COL, this.timer);
-    setCell(Ah_Counter_COL, this.ahCounter);
-    setCell(Wordmaster_Grammarian_COL, this.wordmasterGrammarian);
-    setCell(Table_Topics_Master_COL, this.tableTopicsMaster);
+    setCell(ROLES_COL_MAP["Sergeant_at_Arms"], this.sergeantAtArms);
+    setCell(ROLES_COL_MAP["Secretary"], this.secretary);
+    setCell(ROLES_COL_MAP["Tech_Chair"], this.techChair);
+    setCell(ROLES_COL_MAP["Toastmaster"], this.toastmaster);
+    setCell(ROLES_COL_MAP["Jokemaster"], this.jokemaster);
+    setCell(ROLES_COL_MAP["General_Evaluator"], this.generalEvaluator);
+    setCell(ROLES_COL_MAP["Recorder"], this.recorder);
+    setCell(ROLES_COL_MAP["Timer"], this.timer);
+    setCell(ROLES_COL_MAP["Ah_Counter"], this.ahCounter);
+    setCell(ROLES_COL_MAP["Wordmaster_Grammarian"], this.wordmasterGrammarian);
+    setCell(ROLES_COL_MAP["Table_Topics_Master"], this.tableTopicsMaster);
 
     // Fill out Speakers
     this._populateSpeakerCells(rolesSheet, roleEntryRow);
 
     // Fill out Evaluators
-    setCell(Evaluator_1_COL, this.evaluator1);
-    setCell(Evaluator_2_COL, this.evaluator2);
-    setCell(Evaluator_3_COL, this.evaluator3);
+    setCell(ROLES_COL_MAP["Evaluator_1"], this.evaluator1);
+    setCell(ROLES_COL_MAP["Evaluator_2"], this.evaluator2);
+    setCell(ROLES_COL_MAP["Evaluator_3"], this.evaluator3);
     // TODO(bshaibu): We might want to handle adding a 4th and 5th evaluator to the sign up sheet
 
     // Fill out Waiting list speakers
-    setCell(Waiting_List_Speaker_1_COL, this.waitlistSpeaker1.name);
-    setCell(Waiting_List_Speaker_2_COL, this.waitlistSpeaker2.name);
+    setCell(
+      ROLES_COL_MAP["Waiting_List_Speaker_1"],
+      this.waitlistSpeaker1.name
+    );
+    setCell(
+      ROLES_COL_MAP["Waiting_List_Speaker_2"],
+      this.waitlistSpeaker2.name
+    );
     // TODO(bshaibu): Do we want to save anything beside the waiting list speaker's name?
   }
 
   _populateSpeakerCells(rolesSheet, roleEntryRow) {
-    this.speaker1.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_1_COL);
-    this.speaker2.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_2_COL);
-    this.speaker3.populateRolesSheet(rolesSheet, roleEntryRow, Speaker_3_COL);
+    this.speaker1.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_1"]
+    );
+    this.speaker2.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_2"]
+    );
+    this.speaker3.populateRolesSheet(
+      rolesSheet,
+      roleEntryRow,
+      ROLES_COL_MAP["Speaker_3"]
+    );
     // TODO(bshaibu): We might want to handle adding a 4th and 5th speaker to the sign up sheet
   }
 }
