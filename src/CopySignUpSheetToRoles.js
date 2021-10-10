@@ -10,7 +10,7 @@
 //    the sign up sheet relies on.
 //  (1-indexed relative to spreadsheet)
 const SIGNUP_START_ROW = 2;
-const SIGNUP_END_ROW = 23;
+const SIGNUP_END_ROW = 24;
 const SIGNUP_START_COL = 2;
 const SIGNUP_END_COL = 7;
 
@@ -46,6 +46,7 @@ const SIGNUP_ROW_NAMES = [
   "sergeantAtArms",
   "secretary",
   "techChair",
+  "zoomMaster",
   "toastmaster",
   "jokemaster",
   "generalEvaluator",
@@ -135,6 +136,7 @@ class SignUpDetails {
     setCell(ROLES_COL_MAP["Sergeant_at_Arms"], this.sergeantAtArms);
     setCell(ROLES_COL_MAP["Secretary"], this.secretary);
     setCell(ROLES_COL_MAP["Tech_Chair"], this.techChair);
+    setCell(ROLES_COL_MAP["Zoom_Master"], this.zoomMaster);
     setCell(ROLES_COL_MAP["Toastmaster"], this.toastmaster);
     setCell(ROLES_COL_MAP["Jokemaster"], this.jokemaster);
     setCell(ROLES_COL_MAP["General_Evaluator"], this.generalEvaluator);

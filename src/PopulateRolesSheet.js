@@ -21,6 +21,7 @@ const ROLES_COL_NAMES = [
   "Sergeant_at_Arms",
   "Secretary",
   "Tech_Chair",
+  "Zoom_Master",
   "Toastmaster",
   "Jokemaster",
   "General_Evaluator",
@@ -93,10 +94,6 @@ var Speaker_Speech_Title_COL_OFFSET = 4;
 var Speaker_Min_Time_COL_OFFSET = 5;
 var Speaker_Max_Time_COL_OFFSET = 6;
 
-// let rolesSheetRow;
-// if roles sheet does not have a row for current date
-//  rowToEdit = signUpSheet.addRow
-//  rowToEdit[dateColumns] = date
 
 function getAllRolesDates() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
