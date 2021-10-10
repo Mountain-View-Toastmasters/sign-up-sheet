@@ -7,21 +7,19 @@
  */
 
 // Production Sheet Names
-// TODO(bshaibu): switch back to production
-// const SIGNUP_SHEET_NAME = "Sign-up Sheet";
-// const TM_DETAILS_SHEET_NAME = "ToastmasterDetails";
-// const ROLES_SHEET_NAME = "Roles";
+const SIGNUP_SHEET_NAME = "Sign-up Sheet";
+const TM_DETAILS_SHEET_NAME = "ToastmasterDetails";
+const ROLES_SHEET_NAME = "Roles";
 const ROSTER_SHEET_NAME = "Roster";
-// const SIGNUP_TEMPLATE = "SignUp Template";
+const SIGNUP_TEMPLATE = "SignUp Template";
 
 // Uncomment to switch to testing copies of sheets. 
 //  Comment out any sheets you're planning to test on.
 //  You will need to "Duplicate" the sheets in the actual spreadsheet first.
 //  Note: you generally only need copy and change
 //      SIGNUP_SHEET_NAME, TM_DETAILS_SHEET_NAME, and ROLES_SHEET_NAME
-// TODO(bshaibu): leave dev mode
-const SIGNUP_SHEET_NAME = "Copy of Sign-up Sheet";
-const TM_DETAILS_SHEET_NAME = "Copy of ToastmasterDetails";
-const ROLES_SHEET_NAME = "Copy of Roles";
+// const SIGNUP_SHEET_NAME = "Copy of Sign-up Sheet";
+// const TM_DETAILS_SHEET_NAME = "Copy of ToastmasterDetails";
+// const ROLES_SHEET_NAME = "Copy of Roles";
 // const ROSTER_SHEET_NAME = "Copy of Roster";
-const SIGNUP_TEMPLATE = "Copy of SignUp Template";
+// const SIGNUP_TEMPLATE = "Copy of SignUp Template";
