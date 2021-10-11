@@ -14,7 +14,6 @@ function advanceSignUpSheet() {
   clearOutCurrentSignUp(signUpSheet, signUpTemplate);
   insertNewSignupSection(signUpSheet, signUpTemplate);
   deleteCurrentSignupSection(signUpSheet, signUpTemplate);
-  insertHiddenCols(signUpSheet, signUpTemplate);
   cleanUpExtraCols(signUpSheet);
   updateDate(signUpSheet, signUpTemplate);
 }
@@ -52,24 +51,6 @@ function deleteCurrentSignupSection(signUpSheet, signUpTemplate) {
       signUpTemplate.getLastColumn()
     )
     .deleteCells(SpreadsheetApp.Dimension.COLUMNS);
-}
-
-function insertHiddenCols(signUpSheet, signUpTemplate) {
-  signUpSheet.insertColumnsAfter(__SIGNUP_SHEET_SECTION_START_COL_NUM + 2, 2);
-
-  var fullNameReference = "=FILTER(Roster!$E$5:$E,Roster!$D$5:$D=";
-  var emailReference = "=FILTER(Roster!F$5:$F,Roster!D$5:$D=";
-
-  var startRow = __SIGNUP_SHEET_HEADER_ROW_NUM + 2;
-  var endRow = __SIGNUP_SHEET_HEADER_ROW_NUM + signUpTemplate.getLastRow();
-
-  for (var i = startRow; i <= endRow; i++) {
-    signUpSheet.getRange("E" + i).setValue(fullNameReference + "D" + i + ")");
-    signUpSheet.getRange("F" + i).setValue(emailReference + "D" + i + ")");
-  }
-
-  signUpSheet.hideColumns(5);
-  signUpSheet.hideColumns(6);
 }
 
 function insertNewSignupSection(signUpSheet, signUpTemplate) {
