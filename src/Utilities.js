@@ -4,7 +4,7 @@
 // TODO(bshaibu): Better namespace variables & add more comments
 
 function prettyFormatDate(date) {
-  return Utilities.formatDate(date, "GMT-7", "MM/dd/yy").toString();
+  return Utilities.formatDate(new Date(date), "GMT-7", "MM/dd/yy").toString();
 }
 
 // April 12, 2021
